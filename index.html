@@ -2,120 +2,197 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HUNTER 999x - Tibia Like | Vocações + Coins</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Hunter999x - Tibia Style</title>
 <style>
-*{box-sizing:border-box;font-family:Arial,sans-serif} body{background:#0f0f1a;color:#fff;margin:0;padding:12px;max-width:560px;margin:auto}
-.top{display:flex;justify-content:space-between;background:#1e1e30;padding:12px;border-radius:12px}
-.bar{height:14px;background:#333;border-radius:99px;overflow:hidden;margin:4px 0} .fill{height:100%;background:linear-gradient(90deg,#00ff88,#00ccff);width:0%;transition:.3s} .hp{background:#ff4444!important} .mana{background:#4488ff!important}
-.card{background:#1e1e30;padding:14px;border-radius:14px;margin-top:12px;text-align:center}
-.monster{font-size:90px;margin:8px 0;cursor:pointer} .monster:active{transform:scale(.92)}
-button{width:100%;padding:13px;border:0;border-radius:10px;font-weight:900;font-size:15px;margin-top:8px;cursor:pointer}
-.hunt{background:#00ff88} .skill{background:#a855f7;color:#fff} .potion{background:#ffaa00} .boss{background:#ff4444;color:#fff}
-.log{background:#0008;padding:10px;height:150px;overflow-y:auto;text-align:left;font-size:13px;border-radius:10px;margin-top:10px}
-.loot{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:8px} .item{background:#2a2a45;padding:6px 10px;border-radius:99px;font-size:13px;border:1px solid #444}
-.stats{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-top:12px} .stat{background:#2a2a45;padding:10px;border-radius:10px} .stat b{font-size:18px;display:block}
-.maps{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px} .map{padding:10px;border-radius:10px;background:#2a2a45;cursor:pointer;border:2px solid transparent} .map.active{border-color:#00ff88;background:#00ff8833}
-.vocs{display:grid;grid-template-columns:1fr 1fr;gap:8px} .voc{padding:12px;border-radius:10px;background:#2a2a45;cursor:pointer;border:2px solid transparent;text-align:left} .voc.active{border-color:#ffd700;background:#ffd70022} .voc small{color:#aaa;display:block;font-size:11px}
-input{width:100%;padding:12px;border-radius:10px;border:0;margin-top:8px;background:#2a2a45;color:#fff}
-.badge{background:#ffd700;color:#000;padding:2px 8px;border-radius:99px;font-size:11px;font-weight:900}
-.boost{background:#ffd70022;border:1px solid #ffd700;padding:8px;border-radius:10px;margin-top:8px;font-size:13px}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Verdana,Arial,sans-serif;-webkit-tap-highlight-color:transparent}
+body{background:#0a0a0a;color:#fff;overflow:hidden;height:100vh;display:flex;flex-direction:column}
+.topbar{height:42px;background:#111;display:flex;align-items:center;gap:8px;padding:0 8px;border-bottom:2px solid #333;flex-shrink:0;overflow-x:auto;white-space:nowrap}
+.logo{font-weight:900;color:#f5a623;font-size:18px;text-shadow:0 0 8px #ff0000;letter-spacing:-1px}
+.logo span{color:#fff}
+.pill{background:#1e2a1e;border:1px solid #4a4a4a;border-radius:10px;padding:3px 8px;font-size:11px;color:#8aff8a}
+.pill.gold{background:#2a230f;color:#ffd700}
+.pill.blue{background:#1a1a2a;color:#7ec8ff}
+.pill.store{background:#2a2000;color:#fff;border-color:#d4af37}
+.topicons{margin-left:auto;display:flex;gap:4px}
+.topicons div{width:30px;height:30px;background:#222;border:1px solid #555;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer}
+#gameWrap{flex:1;position:relative;background:#5a5a5a;overflow:hidden;display:flex;align-items:center;justify-content:center}
+#map{width:100%;height:100%;display:grid;grid-template-columns:repeat(20,1fr);grid-template-rows:repeat(12,1fr);background:#6b6b6b;position:relative}
+.tile{background:#7a7a7a;border:1px solid #5f5f5f;position:relative}
+.tile.wall{background:#4a4a4a;background-image:linear-gradient(45deg,#555 25%,transparent 25%,transparent 75%,#555 75%);border-color:#333}
+.tile.wood{background:#c9a86a;border-color:#8a6d3b}
+.tile.grass{background:#3a7a2a}
+.tile.stair{background:#d9d9d9}
+.tile.house{background:#8b5a2b}
+.entity{position:absolute;transform:translate(-50%,-50%);z-index:10;text-align:center;pointer-events:none;transition:all .15s}
+.entity .name{font-size:9px;font-weight:bold;color:#00ff00;text-shadow:1px 1px 0 #000;background:rgba(0,0,0,.5);padding:0 3px;border-radius:3px;white-space:nowrap}
+.entity .spr{font-size:28px;filter:drop-shadow(2px 2px 1px #000)}
+.entity.me .name{color:#fff}
+#player{font-size:32px}
+.bottomBar{background:#1a1a1a;border-top:2px solid #333;padding:4px}
+.depotRow{display:flex;gap:4px;justify-content:center;margin-bottom:4px;flex-wrap:wrap}
+.depotRow button{background:#222;border:1px solid #555;color:#d4c9a0;padding:4px 10px;font-size:11px;font-weight:bold;border-radius:3px;cursor:pointer}
+.depotRow button:active{background:#444}
+.hud{display:flex;gap:6px;align-items:flex-start;flex-wrap:wrap}
+.vitals{flex:1;min-width:180px}
+.bar{height:16px;background:#111;border:1px solid #444;margin:2px 0;position:relative;overflow:hidden;border-radius:2px}
+.bar i{position:absolute;left:0;top:0;bottom:0}
+.bar span{position:absolute;left:0;right:0;text-align:center;font-size:10px;line-height:16px;font-weight:bold;text-shadow:1px 1px 0 #000;z-index:2}
+#hpBar i{background:linear-gradient(#00ff00,#008000);width:100%}
+#mpBar i{background:linear-gradient(#00aaff,#0044ff);width:95%}
+#expBar i{background:linear-gradient(#ffb300,#ff6a00);width:69%}
+.inv{display:flex;gap:3px;flex-wrap:wrap;max-width:320px}
+.slot{width:34px;height:34px;background:#0f0f0f;border:1px solid #555;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer}
+.chatBox{background:#0e1626;border:1px solid #2a3a5a;width:230px;flex-shrink:0}
+.chatHead{background:#1a2a4a;padding:4px 8px;font-size:11px;font-weight:bold;display:flex;justify-content:space-between}
+.chatMsgs{height:60px;overflow-y:auto;padding:4px;font-size:11px;color:#a8c8ff}
+.chatInput{display:flex}
+.chatInput input{flex:1;background:#000;color:#fff;border:1px solid #333;padding:5px;font-size:11px}
+.chatInput button{background:#0055cc;color:#fff;border:none;padding:5px 10px;font-size:11px}
+.controls{display:flex;gap:4px;justify-content:center;margin-top:4px}
+.controls button{width:48px;height:42px;background:#222;border:1px solid #555;border-radius:6px;font-size:18px;color:#fff}
+.controls button:active{background:#f5a623}
+#msg{position:absolute;top:50px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.85);padding:8px 14px;border-radius:8px;border:1px solid #f5a623;font-size:12px;z-index:50;display:none;text-align:center}
+#startScreen{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center}
+#startScreen h1{font-size:36px;color:#f5a623;text-shadow:0 0 15px red}
+.vocGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:15px 0;width:100%;max-width:400px}
+.vocGrid button{background:#1e1e1e;border:2px solid #444;padding:12px;border-radius:10px;color:#fff;cursor:pointer}
+.vocGrid button b{font-size:15px}
+.vocGrid button small{color:#aaa}
+#playBtn{background:#28a745;color:#fff;border:none;padding:14px 40px;font-size:18px;font-weight:900;border-radius:10px;cursor:pointer}
+@media(max-width:700px){.chatBox{display:none}.topbar{height:36px}.slot{width:30px;height:30px}}
 </style>
 </head>
 <body>
-<div class="top"><div><b>⚔️ HUNTER 999x v3</b><br><small>Vocações + Coins + Boost</small></div><div style="text-align:right">Level <b id="level" style="font-size:24px;color:#00ff88">1</b><br><span id="vocName">Knight</span> <span class="badge" id="outfitBadge">No Outfit</span></div></div>
+<div class="topbar">
+<div class="logo">HUNTER<span>999x</span></div>
+<div class="pill">TAXA DE EXP <b>+162%</b></div>
+<div class="pill gold">🪙 <span id="goldTop">23.474</span></div>
+<div class="pill store">🏪 Loja</div>
+<div class="pill blue">🟢 <span id="onlineTop">16343</span> Online</div>
+<div class="topicons"><div>🧑</div><div>⚔️</div><div>🧪</div><div>👁️</div><div>🛡️</div><div>📖</div><div>🎒</div><div>💬</div><div>⚙️</div></div>
+</div>
 
-<div class="card"><b>👤 SEU CHAR</b><input id="playerName" placeholder="Nome do char" maxlength="12" onchange="save()"><div style="display:flex;justify-content:space-between;margin-top:8px"><span>HP <span id="hpText"></span></span><span>MANA <span id="manaText"></span></span></div><div class="bar"><div class="fill hp" id="hpBar"></div></div><div class="bar"><div class="fill mana" id="manaBar"></div></div><div class="bar"><div class="fill" id="xpBar"></div></div><div id="xpText" style="font-size:12px;color:#aaa"></div><div id="boostInfo" class="boost">🚀 Sem Boost ativo</div></div>
+<div id="gameWrap">
+<div id="msg"></div>
+<div id="map"></div>
+</div>
 
-<div class="stats"><div class="stat"><small>💰 GOLD</small><b id="gold">0</b></div><div class="stat"><small>🪙 TIBIA COINS</small><b id="tc" style="color:#ffd700">0</b></div><div class="stat"><small>🗡️ DANO</small><b id="dmg">10</b></div><div class="stat"><small>🧪 POTION</small><b id="pot">3</b></div></div>
+<div class="bottomBar">
+<div class="depotRow"><button onclick="showMsg('DEPOT aberto!')">DEPOT</button><button onclick="showMsg('Loot despachado! +500 gold')">DESPACHAR LOOT</button><button onclick="showMsg('Imbuements - em breve')">IMBUEMENTS</button><button onclick="showMsg('Forja aberta!')">FORJA</button><button onclick="showMsg('Blessings ativas!')">BLESSINGS</button></div>
+<div class="hud">
+<div class="vitals">
+<div class="bar" id="hpBar"><i></i><span id="hpText">395 / 395</span></div>
+<div class="bar" id="mpBar"><i></i><span id="mpText">385 / 405</span></div>
+<div class="bar" id="expBar"><i></i><span>Lv 29 &nbsp; 69.6%</span></div>
+<div style="font-size:10px;color:#888;text-align:right">12:00h 🕐</div>
+</div>
+<div class="inv" id="inv">
+<div class="slot">🪖</div><div class="slot">🧪<br><small style="font-size:9px">5/5</small></div><div class="slot">💎</div><div class="slot">🍎</div><div class="slot">⚔️</div><div class="slot">🛡️</div><div class="slot">+</div><div class="slot">+</div>
+</div>
+<div class="chatBox">
+<div class="chatHead"><span>Chat</span><span>Procurar party ✕ &nbsp; Global ●</span></div>
+<div class="chatMsgs" id="chatMsgs"><div><b style="color:#ff0">Bololo:</b> bora hunt?</div><div><b style="color:#0f0">Murwyn:</b> to no depot</div><div><b style="color:#f0f">Ribaski:</b> vende loot?</div></div>
+<div class="chatInput"><input id="chatIn" placeholder="Procure uma party ou ofereça"><button onclick="sendChat()">Enviar</button></div>
+</div>
+</div>
+<div class="controls">
+<button onclick="move(-1,0)">◀️</button>
+<button onclick="move(0,-1)">🔼</button>
+<button onclick="move(0,1)">🔽</button>
+<button onclick="move(1,0)">▶️</button>
+<button onclick="attack()">⚔️</button>
+<button onclick="heal()">🧪</button>
+</div>
+</div>
 
-<div class="card" style="text-align:left"><b>🧙 ESCOLHA SUA VOCAÇÃO</b><div class="vocs" style="margin-top:8px">
-<div class="voc active" id="voc-Knight" onclick="setVoc('Knight')">⚔️ KNIGHT<small>Tank | HP alto<br>Skill: Exori - Dano em área<br>Passiva: +50% HP</small></div>
-<div class="voc" id="voc-Mage" onclick="setVoc('Mage')">🔥 MAGE<small>Dano mágico gigante<br>Skill: Exori Flam - 3x Dano<br>Passiva: +100% Mana</small></div>
-<div class="voc" id="voc-Druid" onclick="setVoc('Druid')">🌿 DRUID<small>Healer<br>Skill: Exura Vita - Cura 100%<br>Passiva: Regen HP</small></div>
-<div class="voc" id="voc-Paladin" onclick="setVoc('Paladin')">🏹 PALADIN<small>Distância / Crítico<br>Skill: Exori San - Crítico 50%<br>Passiva: +30% Gold</small></div>
-<div class="voc" id="voc-Monk" onclick="setVoc('Monk')">🥋 MONK<small>Combo / Roubo de vida<br>Skill: Exori Fist - 5 hits + rouba HP<br>Passiva: +20% Lifesteal</small></div>
-</div><small style="color:#888">Trocar de vocação reseta só o bônus, mantém level.</small></div>
-
-<div class="card"><b>🗺️ HUNT</b><div class="maps" style="margin-top:8px"><div class="map active" id="map-floresta" onclick="changeMap('floresta')">🌲 Floresta<small>Lvl 1-30</small></div><div class="map" id="map-caverna" onclick="changeMap('caverna')">🪨 Caverna<small>Lvl 30-80<br>2x Gold</small></div><div class="map" id="map-inferno" onclick="changeMap('inferno')">🔥 Inferno<small>Lvl 80+<br>4x Drop</small></div></div></div>
-
-<div class="card"><div id="monsterName" style="font-weight:900"></div><div class="monster" id="monster" onclick="attack()">🐀</div><div>HP Monstro: <b id="mHp"></b> / <span id="mMax"></span></div><div class="bar"><div class="fill hp" id="mBar"></div></div><button class="hunt" onclick="attack()">⚔️ ATACAR</button><button class="skill" id="skillBtn" onclick="useSkill()">✨ USAR SKILL DA VOCAÇÃO</button><button class="potion" onclick="usePotion()">🧪 POTION (+50 HP)</button><button class="boss" onclick="spawnBoss()">👹 BOSS (Loot 4x)</button><div class="loot" id="loot"></div></div>
-
-<div class="card" style="text-align:left"><b>🪙 STORE - TIBIA COINS (Igual Global)</b><div style="font-size:13px;color:#aaa;margin-top:6px">1 TC = 100 Gold | Troque Gold por TC e compre itens premium</div><button onclick="buyTC(10)" style="background:#ffd700">🪙 COMPRAR 10 TC - 1000 Gold</button><button onclick="buyTC(50)" style="background:#ffd700">🪙 COMPRAR 50 TC - 4500 Gold (10% OFF)</button><button onclick="buyStore('xpboost')" style="background:#00ccff">🚀 XP BOOST 2x por 5 min - 20 TC</button><button onclick="buyStore('lootboost')" style="background:#00ff88">📦 LOOT BOOST 2x por 5 min - 20 TC</button><button onclick="buyStore('outfit')" style="background:#a855f7;color:#fff">👑 OUTFIT PREMIUM - 30 TC</button><button onclick="buyStore('mount')" style="background:#ff6b00;color:#fff">🐎 MOUNT - 30 TC (+10% Velocidade)</button><button onclick="buyStore('hp')" style="background:#ff5555">❤️ +50 HP MÁX - 150 Gold</button></div>
-
-<div class="card" style="text-align:left"><b>🏆 RANKING</b><div id="ranking"></div></div>
-<div class="log" id="log"></div>
+<div id="startScreen">
+<h1>HUNTER999x</h1>
+<p style="color:#aaa;margin:8px">Escolha sua vocação - Igual Tibia!</p>
+<div class="vocGrid">
+<button onclick="pick('Knight','⚔️')"><div style="font-size:28px">⚔️</div><b>Knight</b><br><small>Tank forte</small></button>
+<button onclick="pick('Mage','🧙')"><div style="font-size:28px">🧙</div><b>Mage</b><br><small>Dano mágico</small></button>
+<button onclick="pick('Druid','🌿')"><div style="font-size:28px">🌿</div><b>Druid</b><br><small>Cura</small></button>
+<button onclick="pick('Paladin','🏹')"><div style="font-size:28px">🏹</div><b>Paladin</b><br><small>Distância</small></button>
+</div>
+<input id="nick" placeholder="Seu nome (ex: Bololo)" style="padding:12px;width:100%;max-width:400px;border-radius:8px;border:1px solid #444;background:#111;color:#fff;text-align:center;font-size:16px">
+<br><br>
+<button id="playBtn" onclick="start()">▶️ JOGAR</button>
+<p style="font-size:11px;color:#666;margin-top:10px">WASD / Setas para andar • Botão ⚔️ para atacar</p>
+</div>
 
 <script>
-let S = JSON.parse(localStorage.getItem('hunter_v3')||'{}');
-let level=S.level||1, xp=S.xp||0, xpNeed=S.xpNeed||100, gold=S.gold||0, tc=S.tc||0, dmg=S.dmg||10, pot=S.pot||3, maxHp=S.maxHp||100, hp=maxHp, maxMana=S.maxMana||100, mana=maxMana, voc=S.voc||'Knight', currentMap=S.map||'floresta', outfit=S.outfit||'', mount=S.mount||false, boostXpUntil=0, boostLootUntil=0;
-document.getElementById('playerName').value=S.name||'';
-let mHp=50,mMax=50,mLevel=1,isBoss=false, skillCd=0;
-let vocs={
- Knight:{skill:'Exori', desc:'Dano em área', hpMult:1.5, manaMult:1, dmgMult:1},
- Mage:{skill:'Exori Flam', desc:'3x Dano Mágico', hpMult:0.8, manaMult:2, dmgMult:1.4},
- Druid:{skill:'Exura Vita', desc:'Cura 100%', hpMult:1.1, manaMult:1.5, dmgMult:0.9},
- Paladin:{skill:'Exori San', desc:'Crítico 50%', hpMult:1.1, manaMult:1.1, dmgMult:1.2},
- Monk:{skill:'Exori Fist', desc:'5 hits + Lifesteal', hpMult:1.2, manaMult:1.2, dmgMult:1.1}
-};
-let maps={floresta:{list:[{e:'🐀',n:'Rat'},{e:'🐍',n:'Snake'},{e:'🐺',n:'Wolf'}],g:1,x:1},caverna:{list:[{e:'💀',n:'Skeleton'},{e:'🧟',n:'Zombie'},{e:'🕷️',n:'Spider'}],g:2,x:1.5},inferno:{list:[{e:'🐉',n:'Dragon'},{e:'👹',n:'Demon'},{e:'🧛',n:'Vampire'}],g:4,x:2.5}};
-let loots=['⚔️ Sword','🛡️ Shield','💎 Gem','🧪 Potion','👑 Crown','💰 Gold','🔮 Stone','🍖 Meat'];
-function save(){ localStorage.setItem('hunter_v3', JSON.stringify({level,xp,xpNeed,gold,tc,dmg,pot,maxHp,maxMana,voc,map:currentMap,name:document.getElementById('playerName').value,outfit,mount})); updateRank(); }
-function log(t){ document.getElementById('log').innerHTML=t+'<br>'+document.getElementById('log').innerHTML; }
-function getBoost(){ let now=Date.now(); let xpB=now<boostXpUntil?2:1; let lootB=now<boostLootUntil?2:1; return {xpB,lootB}; }
-function update(){
- let v=vocs[voc]; document.getElementById('level').innerText=level; document.getElementById('vocName').innerText=voc.toUpperCase(); document.getElementById('outfitBadge').innerText=outfit?outfit:'No Outfit';
- document.getElementById('hpText').innerText=hp+'/'+maxHp; document.getElementById('manaText').innerText=mana+'/'+maxMana;
- document.getElementById('hpBar').style.width=(hp/maxHp*100)+'%'; document.getElementById('manaBar').style.width=(mana/maxMana*100)+'%'; document.getElementById('xpBar').style.width=(xp/xpNeed*100)+'%';
- document.getElementById('xpText').innerText=xp+' / '+xpNeed+' XP'; document.getElementById('gold').innerText=gold; document.getElementById('tc').innerText=tc; document.getElementById('dmg').innerText=dmg; document.getElementById('pot').innerText=pot;
- document.getElementById('mHp').innerText=Math.max(0,mHp); document.getElementById('mMax').innerText=mMax; document.getElementById('mBar').style.width=(mHp/mMax*100)+'%';
- document.getElementById('skillBtn').innerText='✨ '+v.skill+' - '+v.desc+' (Cooldown '+skillCd+'s)';
- let b=getBoost(); document.getElementById('boostInfo').innerText=(b.xpB>1?'🚀 XP BOOST 2x ATIVO! ':'')+(b.lootB>1?'📦 LOOT BOOST 2x ATIVO! ':'')+(b.xpB==1&&b.lootB==1?'🚀 Sem Boost ativo':'');
- document.querySelectorAll('.voc').forEach(e=>e.classList.remove('active')); let el=document.getElementById('voc-'+voc); if(el) el.classList.add('active');
- save();
+let mapEl=document.getElementById('map');
+let cols=20, rows=12;
+let player={x:10,y:6,voc:'Knight',emoji:'⚔️',name:'Bololo',hp:395,maxHp:395,mp:385,maxMp:405,gold:23474,lv:29};
+let monsters=[
+{x:6,y:2,name:'Murwyn',emoji:'🧙'},
+{x:8,y:2,name:'Ribaski',emoji:'🐴'},
+{x:15,y:1,name:'Pizetta Healer',emoji:'🧝'},
+{x:4,y:7,name:'Rotworm',emoji:'🐛'},
+{x:16,y:8,name:'Rat',emoji:'🐀'},
+{x:12,y:9,name:'Snake',emoji:'🐍'}
+];
+let walls=new Set(['0,0','1,0','2,0','0,1','0,2','1,2','0,5','0,6','0,7','0,8','19,0','19,1','19,2','19,3','19,4','19,5','19,6','19,7','19,8','19,9','19,10','19,11']);
+function buildMap(){
+mapEl.innerHTML='';
+for(let y=0;y<rows;y++) for(let x=0;x<cols;x++){
+let d=document.createElement('div'); d.className='tile';
+if(walls.has(x+','+y)) d.className+=' wall';
+if((x>=3&&x<=6&&y>=4&&y<=8)) d.className+=' wood';
+if((x==15&&y==3)) d.className+=' stair';
+if((x>=14&&x<=17&&y>=4&&y<=5)) d.className+=' house';
+if(x==2&&y==4) d.innerHTML='<div style="text-align:center">🕳️</div>';
+if(x==4&&y==7) d.innerHTML='<div style="text-align:center;font-size:20px">📦</div>';
+if(x==5&&y==7) d.innerHTML='<div style="text-align:center">🪙</div>';
+if(x==3&&y==8) d.innerHTML='<div style="text-align:center">🧀</div>';
+mapEl.appendChild(d);
 }
-function setVoc(v){ voc=v; let baseHp=100+ (level-1)*25; let baseMana=100+(level-1)*10; maxHp=Math.floor(baseHp*vocs[v].hpMult); maxMana=Math.floor(baseMana*vocs[v].manaMult); hp=maxHp; mana=maxMana; log('🧙 Você agora é '+v+'! Skill: '+vocs[v].skill); update(); }
-function changeMap(m){ currentMap=m; document.querySelectorAll('.map').forEach(e=>e.classList.remove('active')); document.getElementById('map-'+m).classList.add('active'); spawnMonster(false); log('🗺️ Foi para '+m); update(); }
-function spawnMonster(boss=false){ isBoss=boss; let list=maps[currentMap].list; let m=list[Math.min(Math.floor(level/15),list.length-1)]; if(boss) m={e:'👹',n:'BOSS '+m.n}; mLevel=boss?level+5:level; mMax=boss?300+level*40:40+level*15; mHp=mMax; document.getElementById('monster').innerText=m.e; document.getElementById('monsterName').innerText=m.e+' '+m.n+' - Lvl '+mLevel+' | '+currentMap.toUpperCase()+(boss?' [BOSS 4x]':''); update(); }
+renderEntities();
+}
+function renderEntities(){
+document.querySelectorAll('.entity').forEach(e=>e.remove());
+monsters.forEach(m=>{
+let e=document.createElement('div'); e.className='entity'; e.style.left=((m.x+0.5)/cols*100)+'%'; e.style.top=((m.y+0.5)/rows*100)+'%';
+e.innerHTML=`<div class="name">${m.name}</div><div class="spr">${m.emoji}</div>`; mapEl.appendChild(e);
+});
+let p=document.createElement('div'); p.className='entity me'; p.style.left=((player.x+0.5)/cols*100)+'%'; p.style.top=((player.y+0.5)/rows*100)+'%';
+p.innerHTML=`<div class="name">${player.name}</div><div class="spr" id="player">${player.emoji}</div>`; mapEl.appendChild(p);
+}
+function move(dx,dy){
+let nx=player.x+dx, ny=player.y+dy;
+if(nx<0||nx>=cols||ny<0||ny>=rows) return;
+if(walls.has(nx+','+ny)) return;
+player.x=nx; player.y=ny; renderEntities();
+let m=monsters.find(m=>m.x==nx&&m.y==ny);
+if(m) attack();
+}
 function attack(){
- if(hp<=0){hp=maxHp; log('💀 Morreu, HP restaurado'); update(); return;}
- let b=getBoost(); let hit=Math.floor((dmg+Math.random()*dmg)*vocs[voc].dmgMult); if(voc=='Paladin' && Math.random()<0.3){hit*=2; log('🎯 CRÍTICO PALADIN!');} mHp-=hit;
- let mDmg=Math.floor(Math.random()*(4+level))+(isBoss?15:2); hp-=mDmg; if(hp<0) hp=0; if(voc=='Monk'){ let heal=Math.floor(hit*0.2); hp=Math.min(maxHp,hp+heal); }
- if(voc=='Druid'){ hp=Math.min(maxHp,hp+2); mana=Math.min(maxMana,mana+5); }
- mana=Math.min(maxMana,mana+3);
- log(`⚔️ Deu ${hit}. Tomou ${mDmg}.`);
- if(mHp<=0){
-  let xpGain=Math.floor((20+mLevel*10)*9.99*maps[currentMap].x*b.xpB);
-  let goldGain=Math.floor((10+Math.random()*30)*maps[currentMap].g*(isBoss?4:1)*(voc=='Paladin'?1.3:1));
-  xp+=xpGain; gold+=goldGain; log(`🎉 Matou! +${xpGain} XP | +${goldGain} Gold`);
-  let dropCount=(isBoss||currentMap=='inferno'?4:2)*b.lootB; let lootDiv=document.getElementById('loot'); lootDiv.innerHTML='';
-  for(let i=0;i<dropCount;i++){ let it=loots[Math.floor(Math.random()*loots.length)]; lootDiv.innerHTML+=`<span class="item">${it}</span>`; if(it.includes('Gold')) gold+=5; if(it.includes('Potion')) pot+=1; }
-  log(`📦 DROP ${dropCount}x!`);
-  while(xp>=xpNeed){xp-=xpNeed; level++; xpNeed=Math.floor(xpNeed*1.25); maxHp+=25; hp=maxHp; dmg+=8; maxMana+=10; log(`🔥 LEVEL UP! Level ${level}!`);}
-  spawnMonster(false);
- }
- update();
+let target=monsters.find(m=>Math.abs(m.x-player.x)<=1&&Math.abs(m.y-player.y)<=1);
+if(!target){ showMsg('Nenhum monstro perto! Ande até ele'); return; }
+let dmg=Math.floor(Math.random()*80)+40;
+showMsg(`Você hitou ${dmg} no ${target.name}!`);
+player.gold+=Math.floor(Math.random()*100);
+document.getElementById('goldTop').textContent=player.gold.toLocaleString('pt-BR');
+if(Math.random()<0.4){ monsters=monsters.filter(m=>m!==target); showMsg(`Você matou ${target.name}! +EXP +Gold`); addChat('Sistema','Você matou '+target.name); }
+setTimeout(()=>{ if(monsters.length<4){ monsters.push({x:Math.floor(Math.random()*18)+1,y:Math.floor(Math.random()*10)+1,name:'Rotworm',emoji:'🐛'}); renderEntities(); } },500);
+renderEntities();
 }
-function useSkill(){
- if(skillCd>0){log('⏳ Skill em cooldown '+skillCd+'s'); return;}
- if(mana<30){log('❌ Sem mana!'); return;}
- mana-=30; skillCd=8;
- if(voc=='Knight'){ let d=dmg*2; mHp-=d; log(`⚔️ EXORI! ${d} dano em área!`); }
- if(voc=='Mage'){ let d=dmg*3; mHp-=d; log(`🔥 EXORI FLAM! ${d} dano mágico!`); }
- if(voc=='Druid'){ hp=maxHp; log(`🌿 EXURA VITA! HP full!`); }
- if(voc=='Paladin'){ let d=dmg*2.5; if(Math.random()<0.5){d*=2; log('🎯 CRÍTICO!');} mHp-=d; log(`🏹 EXORI SAN! ${d} dano!`); }
- if(voc=='Monk'){ let total=0; for(let i=0;i<5;i++){ let h=Math.floor(dmg*0.6); total+=h; mHp-=h; } let heal=Math.floor(total*0.4); hp=Math.min(maxHp,hp+heal); log(`🥋 EXORI FIST! 5 hits = ${total} dano + ${heal} HP roubado!`); }
- if(mHp<=0){ attack(); } update();
+function heal(){ player.hp=player.maxHp; player.mp=player.maxMp; updateBars(); showMsg('Você usou potion! HP/MP cheio!'); }
+function updateBars(){
+document.getElementById('hpText').textContent=player.hp+' / '+player.maxHp;
+document.getElementById('mpText').textContent=player.mp+' / '+player.maxMp;
+document.querySelector('#hpBar i').style.width=(player.hp/player.maxHp*100)+'%';
+document.querySelector('#mpBar i').style.width=(player.mp/player.maxMp*100)+'%';
 }
-function usePotion(){ if(pot<=0){log('❌ Sem potion');return;} pot--; hp=Math.min(maxHp,hp+50); mana=Math.min(maxMana,mana+30); log('🧪 +50 HP +30 Mana'); update(); }
-function spawnBoss(){ spawnMonster(true); log('👹 BOSS! Drop 4x'); }
-function buyTC(q){ let cost=q*100; if(q==50) cost=4500; if(gold>=cost){gold-=cost; tc+=q; log(`🪙 Comprou ${q} TC!`);} else log('❌ Gold insuficiente'); update(); }
-function buyStore(item){ if(item=='xpboost' && tc>=20){tc-=20; boostXpUntil=Date.now()+5*60000; log('🚀 XP Boost 2x por 5 min!');} else if(item=='lootboost' && tc>=20){tc-=20; boostLootUntil=Date.now()+5*60000; log('📦 Loot Boost 2x por 5 min!');} else if(item=='outfit' && tc>=30){tc-=30; outfit='👑 Premium'; log('👑 Outfit Premium equipado!');} else if(item=='mount' && tc>=30){tc-=30; mount=true; log('🐎 Mount comprado!');} else if(item=='hp' && gold>=150){gold-=150; maxHp+=50; hp=maxHp; log('❤️ +50 HP');} else log('❌ Saldo insuficiente'); update(); }
-function updateRank(){ let r=JSON.parse(localStorage.getItem('hunter_rank')||'[]'); let name=document.getElementById('playerName').value||'Você'; r=r.filter(x=>x.name!==name); r.push({name,level,gold}); r.sort((a,b)=>b.level-a.level); r=r.slice(0,5); localStorage.setItem('hunter_rank',JSON.stringify(r)); let h=''; r.forEach((x,i)=>{h+=`<div style="display:flex;justify-content:space-between;padding:8px;background:#2a2a45;border-radius:8px;margin-top:6px"><span>${i+1}º ${x.name}</span><b>Lvl ${x.level}</b></div>`}); document.getElementById('ranking').innerHTML=h; }
-setInterval(()=>{ if(skillCd>0) skillCd--; if(hp<maxHp) hp=Math.min(maxHp,hp+1); if(mana<maxMana) mana=Math.min(maxMana,mana+2); update(); },1000);
-if(!S.level) log('Bem-vindo! Escolha sua vocação e comece a hunt 999x!');
-else log('Bem-vindo de volta! Level '+level+' carregado!');
-changeMap(currentMap); updateRank();
+function showMsg(t){ let m=document.getElementById('msg'); m.textContent=t; m.style.display='block'; setTimeout(()=>m.style.display='none',2200); }
+function addChat(who,txt){ let c=document.getElementById('chatMsgs'); c.innerHTML+=`<div><b>${who}:</b> ${txt}</div>`; c.scrollTop=c.scrollHeight; }
+function sendChat(){ let inp=document.getElementById('chatIn'); if(!inp.value) return; addChat(player.name, inp.value); inp.value=''; }
+function pick(v,e){ player.voc=v; player.emoji=e; document.querySelectorAll('.vocGrid button').forEach(b=>b.style.borderColor='#444'); event.currentTarget.style.borderColor='#f5a623'; showMsg('Você escolheu '+v+'!'); }
+function start(){ let n=document.getElementById('nick').value.trim(); if(n) player.name=n; document.getElementById('startScreen').style.display='none'; showMsg('Bem-vindo, '+player.name+'! Bora hunt!'); }
+document.addEventListener('keydown',e=>{ if(e.key=='w'||e.key=='ArrowUp') move(0,-1); if(e.key=='s'||e.key=='ArrowDown') move(0,1); if(e.key=='a'||e.key=='ArrowLeft') move(-1,0); if(e.key=='d'||e.key=='ArrowRight') move(1,0); if(e.key==' ') attack(); });
+setInterval(()=>{ monsters.forEach(m=>{ if(Math.random()<0.3){ m.x=Math.max(0,Math.min(19,m.x+Math.floor(Math.random()*3)-1)); m.y=Math.max(0,Math.min(11,m.y+Math.floor(Math.random()*3)-1)); } }); renderEntities(); },1800);
+buildMap(); updateBars();
 </script>
 </body>
 </html>
