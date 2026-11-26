@@ -3,196 +3,180 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Hunter999x - Tibia Style</title>
+<title>Hunter999x - Tibia Real</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Verdana,Arial,sans-serif;-webkit-tap-highlight-color:transparent}
-body{background:#0a0a0a;color:#fff;overflow:hidden;height:100vh;display:flex;flex-direction:column}
-.topbar{height:42px;background:#111;display:flex;align-items:center;gap:8px;padding:0 8px;border-bottom:2px solid #333;flex-shrink:0;overflow-x:auto;white-space:nowrap}
-.logo{font-weight:900;color:#f5a623;font-size:18px;text-shadow:0 0 8px #ff0000;letter-spacing:-1px}
-.logo span{color:#fff}
-.pill{background:#1e2a1e;border:1px solid #4a4a4a;border-radius:10px;padding:3px 8px;font-size:11px;color:#8aff8a}
-.pill.gold{background:#2a230f;color:#ffd700}
-.pill.blue{background:#1a1a2a;color:#7ec8ff}
-.pill.store{background:#2a2000;color:#fff;border-color:#d4af37}
-.topicons{margin-left:auto;display:flex;gap:4px}
-.topicons div{width:30px;height:30px;background:#222;border:1px solid #555;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer}
-#gameWrap{flex:1;position:relative;background:#5a5a5a;overflow:hidden;display:flex;align-items:center;justify-content:center}
-#map{width:100%;height:100%;display:grid;grid-template-columns:repeat(20,1fr);grid-template-rows:repeat(12,1fr);background:#6b6b6b;position:relative}
-.tile{background:#7a7a7a;border:1px solid #5f5f5f;position:relative}
-.tile.wall{background:#4a4a4a;background-image:linear-gradient(45deg,#555 25%,transparent 25%,transparent 75%,#555 75%);border-color:#333}
-.tile.wood{background:#c9a86a;border-color:#8a6d3b}
-.tile.grass{background:#3a7a2a}
-.tile.stair{background:#d9d9d9}
-.tile.house{background:#8b5a2b}
-.entity{position:absolute;transform:translate(-50%,-50%);z-index:10;text-align:center;pointer-events:none;transition:all .15s}
-.entity .name{font-size:9px;font-weight:bold;color:#00ff00;text-shadow:1px 1px 0 #000;background:rgba(0,0,0,.5);padding:0 3px;border-radius:3px;white-space:nowrap}
-.entity .spr{font-size:28px;filter:drop-shadow(2px 2px 1px #000)}
-.entity.me .name{color:#fff}
-#player{font-size:32px}
-.bottomBar{background:#1a1a1a;border-top:2px solid #333;padding:4px}
-.depotRow{display:flex;gap:4px;justify-content:center;margin-bottom:4px;flex-wrap:wrap}
-.depotRow button{background:#222;border:1px solid #555;color:#d4c9a0;padding:4px 10px;font-size:11px;font-weight:bold;border-radius:3px;cursor:pointer}
-.depotRow button:active{background:#444}
-.hud{display:flex;gap:6px;align-items:flex-start;flex-wrap:wrap}
-.vitals{flex:1;min-width:180px}
-.bar{height:16px;background:#111;border:1px solid #444;margin:2px 0;position:relative;overflow:hidden;border-radius:2px}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Tahoma,Verdana,Arial,sans-serif}
+body{background:#000;color:#fff;overflow:hidden;height:100vh;display:flex;flex-direction:column}
+.top{height:34px;background:linear-gradient(#2a2a2a,#111);display:flex;align-items:center;gap:6px;padding:0 6px;border-bottom:2px solid #555;font-size:11px;white-space:nowrap;overflow-x:auto}
+.logo{font-weight:900;font-size:18px;color:#e8c33a;text-shadow:1px 1px 0 #000,0 0 8px #ff0000}
+.logo b{color:#fff}
+.top span{background:#1a1a1a;border:1px solid #444;padding:3px 7px;border-radius:4px}
+.main{flex:1;display:flex;overflow:hidden}
+.gameArea{flex:1;background:#000;position:relative;display:flex;flex-direction:column;min-width:0}
+#map{flex:1;display:grid;grid-template-columns:repeat(15,1fr);grid-template-rows:repeat(11,1fr);background:#8a8a8a;position:relative;overflow:hidden}
+.tile{border:0.5px solid rgba(0,0,0,.15);position:relative;background-color:#8f8f8f;background-image:radial-gradient(circle at 30% 30%, #a5a5a5 2px, transparent 3px),radial-gradient(circle at 70% 70%, #7a7a7a 1px, transparent 2px)}
+.tile.grass{background-color:#4a8a2a;background-image:radial-gradient(#3a7a1a 2px, transparent 3px),radial-gradient(#5daa3a 1px, transparent 2px)}
+.tile.wall{background:#5a3a1a;background-image:repeating-linear-gradient(0deg,#6b4520 0 8px,#4a2c10 8px 10px),repeating-linear-gradient(90deg,transparent 0 14px,rgba(0,0,0,.4) 14px 16px)}
+.tile.wood{background:#b9975a;background-image:repeating-linear-gradient(90deg,#c9a86a 0 10px,#a37f45 10px 12px)}
+.tile.roof{background:#8a1a1a;background-image:repeating-linear-gradient(45deg,#a02020 0 8px,#701010 8px 16px)}
+.tile.water{background:#1a5aff;background-image:radial-gradient(#fff 1px, transparent 2px)}
+.tile.sand{background:#e8d28a}
+.tile.stone2{background:#6a6a6a}
+.ent{position:absolute;transform:translate(-50%,-70%);z-index:20;text-align:center;pointer-events:none;transition:all .18s linear}
+.ent .nm{font-size:8px;font-weight:bold;color:#0f0;text-shadow:1px 1px 0 #000;background:rgba(0,0,0,.6);padding:1px 3px;border-radius:2px;white-space:nowrap}
+.ent .hp{width:28px;height:3px;background:#000;margin:1px auto;border:1px solid #000}
+.ent .hp i{display:block;height:100%;background:#0f0}
+.ent .sp{font-size:26px;filter:drop-shadow(2px 2px 0 rgba(0,0,0,.6));line-height:1}
+.ent.me .nm{color:#fff}
+.right{width:220px;background:#d4d0c8;color:#000;flex-shrink:0;display:flex;flex-direction:column;border-left:2px solid #888;overflow-y:auto}
+.panel{border:2px outset #fff;margin:3px;background:#e8e4dc;padding:4px}
+.panel h3{background:#2a4a8a;color:#fff;font-size:11px;padding:3px 6px;margin:-4px -4px 4px}
+.mini{height:110px;background:#1a2a1a;display:grid;grid-template-columns:repeat(15,1fr);grid-template-rows:repeat(11,1fr);gap:0;border:1px solid #000}
+.mini div{font-size:0}
+.vital{font-size:11px;font-weight:bold}
+.bar{height:14px;background:#111;border:1px solid #000;margin:2px 0;position:relative}
 .bar i{position:absolute;left:0;top:0;bottom:0}
-.bar span{position:absolute;left:0;right:0;text-align:center;font-size:10px;line-height:16px;font-weight:bold;text-shadow:1px 1px 0 #000;z-index:2}
-#hpBar i{background:linear-gradient(#00ff00,#008000);width:100%}
-#mpBar i{background:linear-gradient(#00aaff,#0044ff);width:95%}
-#expBar i{background:linear-gradient(#ffb300,#ff6a00);width:69%}
-.inv{display:flex;gap:3px;flex-wrap:wrap;max-width:320px}
-.slot{width:34px;height:34px;background:#0f0f0f;border:1px solid #555;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer}
-.chatBox{background:#0e1626;border:1px solid #2a3a5a;width:230px;flex-shrink:0}
-.chatHead{background:#1a2a4a;padding:4px 8px;font-size:11px;font-weight:bold;display:flex;justify-content:space-between}
-.chatMsgs{height:60px;overflow-y:auto;padding:4px;font-size:11px;color:#a8c8ff}
-.chatInput{display:flex}
-.chatInput input{flex:1;background:#000;color:#fff;border:1px solid #333;padding:5px;font-size:11px}
-.chatInput button{background:#0055cc;color:#fff;border:none;padding:5px 10px;font-size:11px}
-.controls{display:flex;gap:4px;justify-content:center;margin-top:4px}
-.controls button{width:48px;height:42px;background:#222;border:1px solid #555;border-radius:6px;font-size:18px;color:#fff}
-.controls button:active{background:#f5a623}
-#msg{position:absolute;top:50px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.85);padding:8px 14px;border-radius:8px;border:1px solid #f5a623;font-size:12px;z-index:50;display:none;text-align:center}
-#startScreen{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center}
-#startScreen h1{font-size:36px;color:#f5a623;text-shadow:0 0 15px red}
-.vocGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:15px 0;width:100%;max-width:400px}
-.vocGrid button{background:#1e1e1e;border:2px solid #444;padding:12px;border-radius:10px;color:#fff;cursor:pointer}
-.vocGrid button b{font-size:15px}
-.vocGrid button small{color:#aaa}
-#playBtn{background:#28a745;color:#fff;border:none;padding:14px 40px;font-size:18px;font-weight:900;border-radius:10px;cursor:pointer}
-@media(max-width:700px){.chatBox{display:none}.topbar{height:36px}.slot{width:30px;height:30px}}
+.bar span{position:absolute;inset:0;text-align:center;font-size:10px;color:#fff;text-shadow:1px 1px 0 #000;line-height:14px}
+.invGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px}
+.slot{aspect-ratio:1;background:#000;border:2px inset #888;display:flex;align-items:center;justify-content:center;font-size:18px;position:relative;cursor:pointer}
+.slot small{position:absolute;bottom:0;right:2px;font-size:9px;color:#ff0}
+.battle{font-size:11px;max-height:80px;overflow:auto}
+.battle div{padding:2px;border-bottom:1px dotted #aaa;cursor:pointer}
+.bottom{background:#d4d0c8;color:#000;border-top:2px solid #888;padding:3px}
+.tabs{display:flex;gap:2px}
+.tabs button{background:#c0c0c0;border:1px outset #fff;padding:4px 10px;font-size:11px;font-weight:bold;cursor:pointer}
+.tabs button.active{background:#fff}
+#chat{height:70px;background:#fff;border:1px inset #888;overflow-y:auto;padding:4px;font-size:12px}
+.chatIn{display:flex;gap:3px;margin-top:3px}
+.chatIn input{flex:1;padding:6px;border:1px inset #888}
+.chatIn button{background:#2a4a8a;color:#fff;border:none;padding:6px 12px;font-weight:bold}
+.ctrls{display:flex;gap:3px;justify-content:center;margin-top:3px;flex-wrap:wrap}
+.ctrls button{background:#222;color:#fff;border:1px outset #555;width:46px;height:38px;font-size:18px;border-radius:4px}
+#msg{position:absolute;top:40px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.9);color:#ff0;padding:8px 12px;border:1px solid #ff0;border-radius:6px;font-size:12px;z-index:99;display:none;text-align:center}
+#start{position:fixed;inset:0;background:#000 url('');z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;background:radial-gradient(#2a1a0a,#000)}
+#start h1{font-size:42px;color:#e8c33a;text-shadow:0 0 20px #ff0000}
+.vocs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:15px 0;width:100%;max-width:420px}
+.vocs button{background:#1a1a1a;border:2px solid #555;padding:14px;color:#fff;border-radius:8px;cursor:pointer}
+#play{background:#28a745;color:#fff;border:none;padding:14px 50px;font-size:20px;font-weight:900;border-radius:8px;cursor:pointer}
+@media(max-width:750px){.right{display:none}.top{font-size:10px}}
 </style>
 </head>
 <body>
-<div class="topbar">
-<div class="logo">HUNTER<span>999x</span></div>
-<div class="pill">TAXA DE EXP <b>+162%</b></div>
-<div class="pill gold">🪙 <span id="goldTop">23.474</span></div>
-<div class="pill store">🏪 Loja</div>
-<div class="pill blue">🟢 <span id="onlineTop">16343</span> Online</div>
-<div class="topicons"><div>🧑</div><div>⚔️</div><div>🧪</div><div>👁️</div><div>🛡️</div><div>📖</div><div>🎒</div><div>💬</div><div>⚙️</div></div>
-</div>
-
-<div id="gameWrap">
-<div id="msg"></div>
-<div id="map"></div>
-</div>
-
-<div class="bottomBar">
-<div class="depotRow"><button onclick="showMsg('DEPOT aberto!')">DEPOT</button><button onclick="showMsg('Loot despachado! +500 gold')">DESPACHAR LOOT</button><button onclick="showMsg('Imbuements - em breve')">IMBUEMENTS</button><button onclick="showMsg('Forja aberta!')">FORJA</button><button onclick="showMsg('Blessings ativas!')">BLESSINGS</button></div>
-<div class="hud">
-<div class="vitals">
-<div class="bar" id="hpBar"><i></i><span id="hpText">395 / 395</span></div>
-<div class="bar" id="mpBar"><i></i><span id="mpText">385 / 405</span></div>
-<div class="bar" id="expBar"><i></i><span>Lv 29 &nbsp; 69.6%</span></div>
-<div style="font-size:10px;color:#888;text-align:right">12:00h 🕐</div>
-</div>
-<div class="inv" id="inv">
-<div class="slot">🪖</div><div class="slot">🧪<br><small style="font-size:9px">5/5</small></div><div class="slot">💎</div><div class="slot">🍎</div><div class="slot">⚔️</div><div class="slot">🛡️</div><div class="slot">+</div><div class="slot">+</div>
-</div>
-<div class="chatBox">
-<div class="chatHead"><span>Chat</span><span>Procurar party ✕ &nbsp; Global ●</span></div>
-<div class="chatMsgs" id="chatMsgs"><div><b style="color:#ff0">Bololo:</b> bora hunt?</div><div><b style="color:#0f0">Murwyn:</b> to no depot</div><div><b style="color:#f0f">Ribaski:</b> vende loot?</div></div>
-<div class="chatInput"><input id="chatIn" placeholder="Procure uma party ou ofereça"><button onclick="sendChat()">Enviar</button></div>
+<div class="top"><div class="logo">HUNTER<b>999x</b></div><span>⚔️ EXP <b style="color:#0f0">+162%</b></span><span>🪙 <b id="goldTop" style="color:#ffd700">23.474</b></span><span>🏪 Loja</span><span>🟢 <b>16343</b> Online</span><span style="margin-left:auto">👁️ 🗺️ 🎒 ⚙️</span></div>
+<div class="main">
+<div class="gameArea"><div id="msg"></div><div id="map"></div>
+<div style="background:#1a1a1a;display:flex;gap:4px;padding:4px;justify-content:center;flex-wrap:wrap">
+<button onclick="attack()" style="background:#a00;color:#fff;border:none;padding:8px 14px;font-weight:bold;border-radius:4px">⚔️ ATACAR</button>
+<button onclick="heal()" style="background:#0a0;color:#fff;border:none;padding:8px 14px;font-weight:bold;border-radius:4px">🧪 POTION</button>
+<button onclick="showMsg('Você usou Exori!')" style="background:#00a;color:#fff;border:none;padding:8px 14px;font-weight:bold;border-radius:4px">✨ SPELL</button>
+<button onclick="showMsg('Loot despachado para Depot! +500 gold')" style="background:#c90;color:#000;border:none;padding:8px 14px;font-weight:bold;border-radius:4px">📦 DEPOT</button>
 </div>
 </div>
-<div class="controls">
-<button onclick="move(-1,0)">◀️</button>
-<button onclick="move(0,-1)">🔼</button>
-<button onclick="move(0,1)">🔽</button>
-<button onclick="move(1,0)">▶️</button>
-<button onclick="attack()">⚔️</button>
-<button onclick="heal()">🧪</button>
+<div class="right">
+<div class="panel"><h3>🗺️ Minimap - Thais</h3><div class="mini" id="mini"></div><div style="font-size:10px;text-align:center">Thais - 32123, 32123, 7</div></div>
+<div class="panel"><h3>❤️ Vitals</h3>
+<div class="vital">Health</div><div class="bar"><i id="hpFill" style="background:#00c000;width:100%"></i><span id="hpTxt">395 / 395</span></div>
+<div class="vital">Mana</div><div class="bar"><i id="mpFill" style="background:#0066ff;width:95%"></i><span id="mpTxt">385 / 405</span></div>
+<div class="vital">Experience - Lv <span id="lvTxt">29</span></div><div class="bar"><i style="background:#ffaa00;width:69%"></i><span>69.6% para Lv 30</span></div>
+<div style="font-size:10px">Stamina: 39:12h &nbsp; Soul: 100</div>
+</div>
+<div class="panel"><h3>🎒 Inventário</h3><div class="invGrid">
+<div class="slot">🪖</div><div class="slot">🛡️</div><div class="slot">⚔️</div><div class="slot">👢</div>
+<div class="slot">🧪<small>100</small></div><div class="slot">🧪<small>100</small></div><div class="slot">🍖<small>20</small></div><div class="slot">💎</div>
+<div class="slot">📦</div><div class="slot">🗝️</div><div class="slot">🧀</div><div class="slot">+</div>
+</div><div style="font-size:10px;margin-top:3px">Cap: 420 oz &nbsp; Gold: <b id="goldSide">23.474</b></div></div>
+<div class="panel"><h3>⚔️ Battle List</h3><div class="battle" id="battle"></div></div>
+<div class="panel"><h3>📊 Skills</h3><div style="font-size:11px">⚔️ Sword: 45<br>🛡️ Shielding: 38<br>🏹 Distance: 22<br>✨ Magic: 18<br>🎣 Fishing: 10</div></div>
 </div>
 </div>
-
-<div id="startScreen">
-<h1>HUNTER999x</h1>
-<p style="color:#aaa;margin:8px">Escolha sua vocação - Igual Tibia!</p>
-<div class="vocGrid">
-<button onclick="pick('Knight','⚔️')"><div style="font-size:28px">⚔️</div><b>Knight</b><br><small>Tank forte</small></button>
-<button onclick="pick('Mage','🧙')"><div style="font-size:28px">🧙</div><b>Mage</b><br><small>Dano mágico</small></button>
-<button onclick="pick('Druid','🌿')"><div style="font-size:28px">🌿</div><b>Druid</b><br><small>Cura</small></button>
-<button onclick="pick('Paladin','🏹')"><div style="font-size:28px">🏹</div><b>Paladin</b><br><small>Distância</small></button>
+<div class="bottom">
+<div class="tabs"><button class="active">Local Chat</button><button onclick="showMsg('Global - 16343 players online')">Global</button><button onclick="showMsg('Loot: Você lootou 50 gold')">Loot</button><button>Party</button></div>
+<div id="chat"><div><b style="color:#0000ff">Pizetta Healer:</b> Welcome to Thais!</div><div><b style="color:#008000">Murwyn:</b> Bora hunt?</div><div><b style="color:#ff00ff">Ribaski:</b> Compro loot!</div><div><b style="color:#ff0000">Loot:</b> Você matou um Rat. Loot: 2 gold.</div></div>
+<div class="chatIn"><input id="chatIn" placeholder="Diga algo... (ex: hi, exori, bora hunt)"><button onclick="sendChat()">Falar</button></div>
+<div class="ctrls"><button onclick="move(-1,0)">◀️</button><button onclick="move(0,-1)">🔼</button><button onclick="move(0,1)">🔽</button><button onclick="move(1,0)">▶️</button><button onclick="attack()">⚔️</button><button onclick="heal()">🧪</button><button onclick="showMsg('Follow ligado!')">👣</button></div>
 </div>
-<input id="nick" placeholder="Seu nome (ex: Bololo)" style="padding:12px;width:100%;max-width:400px;border-radius:8px;border:1px solid #444;background:#111;color:#fff;text-align:center;font-size:16px">
-<br><br>
-<button id="playBtn" onclick="start()">▶️ JOGAR</button>
-<p style="font-size:11px;color:#666;margin-top:10px">WASD / Setas para andar • Botão ⚔️ para atacar</p>
+<div id="start">
+<h1>HUNTER999x</h1><p style="color:#aaa">Tibia Real - Thais</p>
+<div class="vocs">
+<button onclick="pick('Knight','🧔')"><div style="font-size:30px">🧔</div><b>Knight</b><br><small>HP alto, Exori</small></button>
+<button onclick="pick('Sorcerer','🧙')"><div style="font-size:30px">🧙</div><b>Sorcerer</b><br><small>SD, Exori Flam</small></button>
+<button onclick="pick('Druid','🧝')"><div style="font-size:30px">🧝</div><b>Druid</b><br><small>Heal, Exori Ico</small></button>
+<button onclick="pick('Paladin','🏹')"><div style="font-size:30px">🏹</div><b>Paladin</b><br><small>Exori San, Bolt</small></button>
 </div>
-
+<input id="nick" placeholder="Seu nome (ex: Bololo)" style="padding:12px;width:100%;max-width:420px;background:#111;color:#fff;border:1px solid #555;border-radius:6px;text-align:center;font-size:16px">
+<br><br><button id="play" onclick="startGame()">▶️ ENTRAR EM THAIS</button>
+<p style="font-size:11px;color:#666;margin-top:10px">WASD / Setas para andar • Espaço para atacar</p>
+</div>
 <script>
-let mapEl=document.getElementById('map');
-let cols=20, rows=12;
-let player={x:10,y:6,voc:'Knight',emoji:'⚔️',name:'Bololo',hp:395,maxHp:395,mp:385,maxMp:405,gold:23474,lv:29};
-let monsters=[
-{x:6,y:2,name:'Murwyn',emoji:'🧙'},
-{x:8,y:2,name:'Ribaski',emoji:'🐴'},
-{x:15,y:1,name:'Pizetta Healer',emoji:'🧝'},
-{x:4,y:7,name:'Rotworm',emoji:'🐛'},
-{x:16,y:8,name:'Rat',emoji:'🐀'},
-{x:12,y:9,name:'Snake',emoji:'🐍'}
+let mapEl=document.getElementById('map'), cols=15, rows=11;
+let P={x:7,y:5,name:'Bololo',emoji:'🧔',hp:395,mhp:395,mp:385,mmp:405,gold:23474,lv:29,exp:69};
+let Mons=[
+{x:3,y:2,name:'Pizetta Healer',emoji:'🧝',hp:100},
+{x:5,y:2,name:'Murwyn',emoji:'🧙',hp:100},
+{x:11,y:1,name:'Ribaski',emoji:'🐴',hp:100},
+{x:2,y:7,name:'Rat',emoji:'🐀',hp:60},
+{x:12,y:8,name:'Snake',emoji:'🐍',hp:80},
+{x:10,y:3,name:'Rotworm',emoji:'🐛',hp:90},
+{x:4,y:9,name:'Troll',emoji:'👹',hp:120}
 ];
-let walls=new Set(['0,0','1,0','2,0','0,1','0,2','1,2','0,5','0,6','0,7','0,8','19,0','19,1','19,2','19,3','19,4','19,5','19,6','19,7','19,8','19,9','19,10','19,11']);
-function buildMap(){
+let walls=new Set(['0,0','1,0','2,0','3,0','0,1','0,2','0,3','0,4','0,5','0,6','0,7','0,8','0,9','0,10','14,0','14,1','14,2','14,3','14,4','14,5','14,6','14,7','14,8','14,9','14,10']);
+let grass=new Set(['1,9','2,9','1,10','2,10','12,9','13,9','12,10','13,10','1,1','2,1']);
+let house=new Set(['9,1','10,1','11,1','9,2','10,2','11,2']);
+let roof=new Set(['9,0','10,0','11,0']);
+function build(){
 mapEl.innerHTML='';
 for(let y=0;y<rows;y++) for(let x=0;x<cols;x++){
 let d=document.createElement('div'); d.className='tile';
 if(walls.has(x+','+y)) d.className+=' wall';
-if((x>=3&&x<=6&&y>=4&&y<=8)) d.className+=' wood';
-if((x==15&&y==3)) d.className+=' stair';
-if((x>=14&&x<=17&&y>=4&&y<=5)) d.className+=' house';
-if(x==2&&y==4) d.innerHTML='<div style="text-align:center">🕳️</div>';
-if(x==4&&y==7) d.innerHTML='<div style="text-align:center;font-size:20px">📦</div>';
-if(x==5&&y==7) d.innerHTML='<div style="text-align:center">🪙</div>';
-if(x==3&&y==8) d.innerHTML='<div style="text-align:center">🧀</div>';
+if(grass.has(x+','+y)) d.className+=' grass';
+if(house.has(x+','+y)) d.className+=' wood';
+if(roof.has(x+','+y)) d.className+=' roof';
+if(x==6&&y==1) d.className+=' water';
+if(x==7&&y==1) d.className+=' water';
+if(x==7&&y==8) d.className+=' sand';
+if(x==8&&y==8) d.className+=' sand';
+if(x==6&&y==7) d.innerHTML='<div style="text-align:center;font-size:20px">🌳</div>';
+if(x==13&&y==7) d.innerHTML='<div style="text-align:center;font-size:20px">🌳</div>';
+if(x==10&&y==4) d.innerHTML='<div style="text-align:center;font-size:20px">📦</div>';
+if(x==3&&y==5) d.innerHTML='<div style="text-align:center;font-size:20px">🪙</div>';
 mapEl.appendChild(d);
 }
-renderEntities();
+let mini=document.getElementById('mini'); mini.innerHTML='';
+for(let i=0;i<165;i++){ let m=document.createElement('div'); m.style.background=['#8f8f8f','#4a8a2a','#5a3a1a','#1a5aff'][Math.floor(Math.random()*4)]; mini.appendChild(m); }
+render(); updateBattle();
 }
-function renderEntities(){
-document.querySelectorAll('.entity').forEach(e=>e.remove());
-monsters.forEach(m=>{
-let e=document.createElement('div'); e.className='entity'; e.style.left=((m.x+0.5)/cols*100)+'%'; e.style.top=((m.y+0.5)/rows*100)+'%';
-e.innerHTML=`<div class="name">${m.name}</div><div class="spr">${m.emoji}</div>`; mapEl.appendChild(e);
+function render(){
+document.querySelectorAll('.ent').forEach(e=>e.remove());
+Mons.forEach(m=>{
+let e=document.createElement('div'); e.className='ent'; e.style.left=((m.x+0.5)/cols*100)+'%'; e.style.top=((m.y+0.5)/rows*100)+'%';
+e.innerHTML=`<div class="nm">${m.name}</div><div class="hp"><i style="width:${m.hp}%"></i></div><div class="sp">${m.emoji}</div>`; mapEl.appendChild(e);
 });
-let p=document.createElement('div'); p.className='entity me'; p.style.left=((player.x+0.5)/cols*100)+'%'; p.style.top=((player.y+0.5)/rows*100)+'%';
-p.innerHTML=`<div class="name">${player.name}</div><div class="spr" id="player">${player.emoji}</div>`; mapEl.appendChild(p);
+let p=document.createElement('div'); p.className='ent me'; p.style.left=((P.x+0.5)/cols*100)+'%'; p.style.top=((P.y+0.5)/rows*100)+'%';
+p.innerHTML=`<div class="nm">${P.name}</div><div class="hp"><i style="width:${P.hp/P.mhp*100}%"></i></div><div class="sp" style="font-size:30px">${P.emoji}</div>`; mapEl.appendChild(p);
 }
 function move(dx,dy){
-let nx=player.x+dx, ny=player.y+dy;
-if(nx<0||nx>=cols||ny<0||ny>=rows) return;
-if(walls.has(nx+','+ny)) return;
-player.x=nx; player.y=ny; renderEntities();
-let m=monsters.find(m=>m.x==nx&&m.y==ny);
-if(m) attack();
+let nx=P.x+dx, ny=P.y+dy; if(nx<0||nx>=cols||ny<0||ny>=rows) return; if(walls.has(nx+','+ny)) return; P.x=nx; P.y=ny; render();
+let m=Mons.find(m=>m.x==nx&&m.y==ny); if(m) attack();
 }
 function attack(){
-let target=monsters.find(m=>Math.abs(m.x-player.x)<=1&&Math.abs(m.y-player.y)<=1);
-if(!target){ showMsg('Nenhum monstro perto! Ande até ele'); return; }
-let dmg=Math.floor(Math.random()*80)+40;
-showMsg(`Você hitou ${dmg} no ${target.name}!`);
-player.gold+=Math.floor(Math.random()*100);
-document.getElementById('goldTop').textContent=player.gold.toLocaleString('pt-BR');
-if(Math.random()<0.4){ monsters=monsters.filter(m=>m!==target); showMsg(`Você matou ${target.name}! +EXP +Gold`); addChat('Sistema','Você matou '+target.name); }
-setTimeout(()=>{ if(monsters.length<4){ monsters.push({x:Math.floor(Math.random()*18)+1,y:Math.floor(Math.random()*10)+1,name:'Rotworm',emoji:'🐛'}); renderEntities(); } },500);
-renderEntities();
+let t=Mons.find(m=>Math.abs(m.x-P.x)<=1&&Math.abs(m.y-P.y)<=1);
+if(!t){ showMsg('Nenhum monstro perto! Ande até ele e ataque.'); return; }
+let dmg=Math.floor(Math.random()*120)+50; t.hp-=dmg;
+addChat('Loot',`Você hitou ${dmg} no ${t.name} (HP ${Math.max(0,t.hp)})`);
+showMsg(`⚔️ Você hitou ${dmg} no ${t.name}!`);
+if(t.hp<=0){ Mons=Mons.filter(m=>m!==t); let g=Math.floor(Math.random()*200)+50; P.gold+=g; P.exp+=5; addChat('Loot',`Você matou ${t.name}! Loot: ${g} gold.`); showMsg(`Você matou ${t.name}! +${g} gold +EXP`); document.getElementById('goldTop').textContent=P.gold.toLocaleString('pt-BR'); document.getElementById('goldSide').textContent=P.gold.toLocaleString('pt-BR'); setTimeout(()=>{ Mons.push({x:Math.floor(Math.random()*13)+1,y:Math.floor(Math.random()*9)+1,name:'Rat',emoji:'🐀',hp:60}); render(); updateBattle(); },2000); }
+render(); updateBattle();
 }
-function heal(){ player.hp=player.maxHp; player.mp=player.maxMp; updateBars(); showMsg('Você usou potion! HP/MP cheio!'); }
-function updateBars(){
-document.getElementById('hpText').textContent=player.hp+' / '+player.maxHp;
-document.getElementById('mpText').textContent=player.mp+' / '+player.maxMp;
-document.querySelector('#hpBar i').style.width=(player.hp/player.maxHp*100)+'%';
-document.querySelector('#mpBar i').style.width=(player.mp/player.maxMp*100)+'%';
-}
+function heal(){ P.hp=P.mhp; P.mp=P.mmp; document.getElementById('hpTxt').textContent=P.hp+' / '+P.mhp; document.getElementById('mpTxt').textContent=P.mp+' / '+P.mmp; document.getElementById('hpFill').style.width='100%'; document.getElementById('mpFill').style.width='95%'; showMsg('Você usou Ultimate Health Potion!'); addChat('Loot','Você usou potion.'); }
+function updateBattle(){ document.getElementById('battle').innerHTML=Mons.map(m=>`<div>${m.emoji} ${m.name} - ${m.hp} HP</div>`).join(''); }
 function showMsg(t){ let m=document.getElementById('msg'); m.textContent=t; m.style.display='block'; setTimeout(()=>m.style.display='none',2200); }
-function addChat(who,txt){ let c=document.getElementById('chatMsgs'); c.innerHTML+=`<div><b>${who}:</b> ${txt}</div>`; c.scrollTop=c.scrollHeight; }
-function sendChat(){ let inp=document.getElementById('chatIn'); if(!inp.value) return; addChat(player.name, inp.value); inp.value=''; }
-function pick(v,e){ player.voc=v; player.emoji=e; document.querySelectorAll('.vocGrid button').forEach(b=>b.style.borderColor='#444'); event.currentTarget.style.borderColor='#f5a623'; showMsg('Você escolheu '+v+'!'); }
-function start(){ let n=document.getElementById('nick').value.trim(); if(n) player.name=n; document.getElementById('startScreen').style.display='none'; showMsg('Bem-vindo, '+player.name+'! Bora hunt!'); }
+function addChat(who,txt){ let c=document.getElementById('chat'); c.innerHTML+=`<div><b>${who}:</b> ${txt}</div>`; c.scrollTop=c.scrollHeight; }
+function sendChat(){ let i=document.getElementById('chatIn'); if(!i.value) return; addChat(P.name,i.value); i.value=''; }
+function pick(v,e){ P.emoji=e; document.querySelectorAll('.vocs button').forEach(b=>b.style.borderColor='#555'); event.currentTarget.style.borderColor='#ffd700'; showMsg('Você escolheu '+v); }
+function startGame(){ let n=document.getElementById('nick').value.trim(); if(n) P.name=n; document.getElementById('start').style.display='none'; showMsg('Bem-vindo a Thais, '+P.name+'!'); }
 document.addEventListener('keydown',e=>{ if(e.key=='w'||e.key=='ArrowUp') move(0,-1); if(e.key=='s'||e.key=='ArrowDown') move(0,1); if(e.key=='a'||e.key=='ArrowLeft') move(-1,0); if(e.key=='d'||e.key=='ArrowRight') move(1,0); if(e.key==' ') attack(); });
-setInterval(()=>{ monsters.forEach(m=>{ if(Math.random()<0.3){ m.x=Math.max(0,Math.min(19,m.x+Math.floor(Math.random()*3)-1)); m.y=Math.max(0,Math.min(11,m.y+Math.floor(Math.random()*3)-1)); } }); renderEntities(); },1800);
-buildMap(); updateBars();
+setInterval(()=>{ Mons.forEach(m=>{ if(Math.random()<0.25){ m.x=Math.max(0,Math.min(14,m.x+Math.floor(Math.random()*3)-1)); m.y=Math.max(0,Math.min(10,m.y+Math.floor(Math.random()*3)-1)); } }); render(); },2000);
+build();
 </script>
 </body>
 </html>
