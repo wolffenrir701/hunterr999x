@@ -3,126 +3,106 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Hunter999x - Tibia Real</title>
+<title>Hunter999x - Tibia Real + NPC</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Tahoma,Verdana,Arial,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Tahoma,Verdana,sans-serif}
 body{background:#000;color:#fff;overflow:hidden;height:100vh;display:flex;flex-direction:column}
-.top{height:34px;background:linear-gradient(#2a2a2a,#111);display:flex;align-items:center;gap:6px;padding:0 6px;border-bottom:2px solid #555;font-size:11px;white-space:nowrap;overflow-x:auto}
-.logo{font-weight:900;font-size:18px;color:#e8c33a;text-shadow:1px 1px 0 #000,0 0 8px #ff0000}
-.logo b{color:#fff}
+.top{height:34px;background:linear-gradient(#2a2a2a,#111);display:flex;align-items:center;gap:6px;padding:0 6px;border-bottom:2px solid #555;font-size:11px;overflow-x:auto;white-space:nowrap}
+.logo{font-weight:900;font-size:18px;color:#e8c33a}.logo b{color:#fff}
 .top span{background:#1a1a1a;border:1px solid #444;padding:3px 7px;border-radius:4px}
-.main{flex:1;display:flex;overflow:hidden}
-.gameArea{flex:1;background:#000;position:relative;display:flex;flex-direction:column;min-width:0}
-#map{flex:1;display:grid;grid-template-columns:repeat(15,1fr);grid-template-rows:repeat(11,1fr);background:#8a8a8a;position:relative;overflow:hidden}
-.tile{border:0.5px solid rgba(0,0,0,.15);position:relative;background-color:#8f8f8f;background-image:radial-gradient(circle at 30% 30%, #a5a5a5 2px, transparent 3px),radial-gradient(circle at 70% 70%, #7a7a7a 1px, transparent 2px)}
-.tile.grass{background-color:#4a8a2a;background-image:radial-gradient(#3a7a1a 2px, transparent 3px),radial-gradient(#5daa3a 1px, transparent 2px)}
-.tile.wall{background:#5a3a1a;background-image:repeating-linear-gradient(0deg,#6b4520 0 8px,#4a2c10 8px 10px),repeating-linear-gradient(90deg,transparent 0 14px,rgba(0,0,0,.4) 14px 16px)}
-.tile.wood{background:#b9975a;background-image:repeating-linear-gradient(90deg,#c9a86a 0 10px,#a37f45 10px 12px)}
-.tile.roof{background:#8a1a1a;background-image:repeating-linear-gradient(45deg,#a02020 0 8px,#701010 8px 16px)}
-.tile.water{background:#1a5aff;background-image:radial-gradient(#fff 1px, transparent 2px)}
-.tile.sand{background:#e8d28a}
-.tile.stone2{background:#6a6a6a}
-.ent{position:absolute;transform:translate(-50%,-70%);z-index:20;text-align:center;pointer-events:none;transition:all .18s linear}
+.main{flex:1;display:flex;overflow:hidden}.gameArea{flex:1;display:flex;flex-direction:column;min-width:0;position:relative}
+#map{flex:1;display:grid;grid-template-columns:repeat(15,1fr);grid-template-rows:repeat(11,1fr);background:#8a8a8a;position:relative}
+.tile{border:.5px solid rgba(0,0,0,.15);position:relative;background:#8f8f8f}
+.tile.grass{background:#4a8a2a}.tile.wall{background:#5a3a1a;background-image:repeating-linear-gradient(0deg,#6b4520 0 8px,#4a2c10 8px 10px)}
+.tile.wood{background:#b9975a}.tile.roof{background:#8a1a1a}.tile.water{background:#1a5aff}.tile.sand{background:#e8d28a}
+.ent{position:absolute;transform:translate(-50%,-70%);z-index:20;text-align:center;pointer-events:none;transition:all .18s}
 .ent .nm{font-size:8px;font-weight:bold;color:#0f0;text-shadow:1px 1px 0 #000;background:rgba(0,0,0,.6);padding:1px 3px;border-radius:2px;white-space:nowrap}
-.ent .hp{width:28px;height:3px;background:#000;margin:1px auto;border:1px solid #000}
-.ent .hp i{display:block;height:100%;background:#0f0}
-.ent .sp{font-size:26px;filter:drop-shadow(2px 2px 0 rgba(0,0,0,.6));line-height:1}
-.ent.me .nm{color:#fff}
+.ent .hp{width:28px;height:3px;background:#000;margin:1px auto}.ent .hp i{display:block;height:100%;background:#0f0}
+.ent .sp{font-size:26px;filter:drop-shadow(2px 2px 0 rgba(0,0,0,.6))}
+.ent.me .nm{color:#fff}.ent.npc .nm{color:#ff0}
 .right{width:220px;background:#d4d0c8;color:#000;flex-shrink:0;display:flex;flex-direction:column;border-left:2px solid #888;overflow-y:auto}
-.panel{border:2px outset #fff;margin:3px;background:#e8e4dc;padding:4px}
-.panel h3{background:#2a4a8a;color:#fff;font-size:11px;padding:3px 6px;margin:-4px -4px 4px}
-.mini{height:110px;background:#1a2a1a;display:grid;grid-template-columns:repeat(15,1fr);grid-template-rows:repeat(11,1fr);gap:0;border:1px solid #000}
-.mini div{font-size:0}
-.vital{font-size:11px;font-weight:bold}
-.bar{height:14px;background:#111;border:1px solid #000;margin:2px 0;position:relative}
-.bar i{position:absolute;left:0;top:0;bottom:0}
-.bar span{position:absolute;inset:0;text-align:center;font-size:10px;color:#fff;text-shadow:1px 1px 0 #000;line-height:14px}
-.invGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px}
-.slot{aspect-ratio:1;background:#000;border:2px inset #888;display:flex;align-items:center;justify-content:center;font-size:18px;position:relative;cursor:pointer}
-.slot small{position:absolute;bottom:0;right:2px;font-size:9px;color:#ff0}
-.battle{font-size:11px;max-height:80px;overflow:auto}
-.battle div{padding:2px;border-bottom:1px dotted #aaa;cursor:pointer}
-.bottom{background:#d4d0c8;color:#000;border-top:2px solid #888;padding:3px}
-.tabs{display:flex;gap:2px}
-.tabs button{background:#c0c0c0;border:1px outset #fff;padding:4px 10px;font-size:11px;font-weight:bold;cursor:pointer}
+.panel{border:2px outset #fff;margin:3px;background:#e8e4dc;padding:4px}.panel h3{background:#2a4a8a;color:#fff;font-size:11px;padding:3px 6px;margin:-4px -4px 4px}
+.mini{height:110px;background:#1a2a1a;display:grid;grid-template-columns:repeat(15,1fr);grid-template-rows:repeat(11,1fr)}
+.vital{font-size:11px;font-weight:bold}.bar{height:14px;background:#111;border:1px solid #000;margin:2px 0;position:relative}.bar i{position:absolute;left:0;top:0;bottom:0}.bar span{position:absolute;inset:0;text-align:center;font-size:10px;color:#fff;line-height:14px}
+.invGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px}.slot{aspect-ratio:1;background:#000;border:2px inset #888;display:flex;align-items:center;justify-content:center;font-size:18px;position:relative;cursor:pointer}.slot small{position:absolute;bottom:0;right:2px;font-size:9px;color:#ff0}
+.battle{font-size:11px;max-height:80px;overflow:auto}.battle div{padding:2px;border-bottom:1px dotted #aaa}
+.bottom{background:#d4d0c8;color:#000;border-top:2px solid #888;padding:3px}.tabs{display:flex;gap:2px}.tabs button{background:#c0c0c0;border:1px outset #fff;padding:4px 10px;font-size:11px;font-weight:bold}
 .tabs button.active{background:#fff}
 #chat{height:70px;background:#fff;border:1px inset #888;overflow-y:auto;padding:4px;font-size:12px}
-.chatIn{display:flex;gap:3px;margin-top:3px}
-.chatIn input{flex:1;padding:6px;border:1px inset #888}
-.chatIn button{background:#2a4a8a;color:#fff;border:none;padding:6px 12px;font-weight:bold}
-.ctrls{display:flex;gap:3px;justify-content:center;margin-top:3px;flex-wrap:wrap}
-.ctrls button{background:#222;color:#fff;border:1px outset #555;width:46px;height:38px;font-size:18px;border-radius:4px}
+.chatIn{display:flex;gap:3px;margin-top:3px}.chatIn input{flex:1;padding:6px;border:1px inset #888}.chatIn button{background:#2a4a8a;color:#fff;border:none;padding:6px 12px;font-weight:bold}
+.ctrls{display:flex;gap:3px;justify-content:center;margin-top:3px;flex-wrap:wrap}.ctrls button{background:#222;color:#fff;border:1px outset #555;width:46px;height:38px;font-size:18px;border-radius:4px}
 #msg{position:absolute;top:40px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.9);color:#ff0;padding:8px 12px;border:1px solid #ff0;border-radius:6px;font-size:12px;z-index:99;display:none;text-align:center}
-#start{position:fixed;inset:0;background:#000 url('');z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;background:radial-gradient(#2a1a0a,#000)}
-#start h1{font-size:42px;color:#e8c33a;text-shadow:0 0 20px #ff0000}
-.vocs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:15px 0;width:100%;max-width:420px}
-.vocs button{background:#1a1a1a;border:2px solid #555;padding:14px;color:#fff;border-radius:8px;cursor:pointer}
+#npcBox,#depotBox,#shopBox{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:90%;max-width:380px;background:#e8e4dc;color:#000;border:3px outset #fff;z-index:300;display:none;padding:0}
+#npcBox h3,#depotBox h3,#shopBox h3{background:#2a4a8a;color:#fff;padding:8px}
+#npcBox p,#depotBox p,#shopBox p{padding:10px;font-size:13px;line-height:1.5}
+#npcBox button,#depotBox button,#shopBox button{margin:4px;padding:8px 12px;background:#2a4a8a;color:#fff;border:none;border-radius:4px;font-weight:bold;cursor:pointer}
+#start{position:fixed;inset:0;background:radial-gradient(#2a1a0a,#000);z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center}
+#start h1{font-size:42px;color:#e8c33a;text-shadow:0 0 20px #f00}
+.vocs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:15px 0;width:100%;max-width:420px}.vocs button{background:#1a1a1a;border:2px solid #555;padding:14px;color:#fff;border-radius:8px;cursor:pointer}
 #play{background:#28a745;color:#fff;border:none;padding:14px 50px;font-size:20px;font-weight:900;border-radius:8px;cursor:pointer}
-@media(max-width:750px){.right{display:none}.top{font-size:10px}}
+@media(max-width:750px){.right{display:none}}
 </style>
 </head>
 <body>
-<div class="top"><div class="logo">HUNTER<b>999x</b></div><span>⚔️ EXP <b style="color:#0f0">+162%</b></span><span>🪙 <b id="goldTop" style="color:#ffd700">23.474</b></span><span>🏪 Loja</span><span>🟢 <b>16343</b> Online</span><span style="margin-left:auto">👁️ 🗺️ 🎒 ⚙️</span></div>
+<div class="top"><div class="logo">HUNTER<b>999x</b></div><span>⚔️ EXP <b style="color:#0f0">+162%</b></span><span>🪙 <b id="goldTop" style="color:#ffd700">23.474</b></span><span>🏪 Loja</span><span>🟢 <b>16343</b> Online</span></div>
 <div class="main">
 <div class="gameArea"><div id="msg"></div><div id="map"></div>
 <div style="background:#1a1a1a;display:flex;gap:4px;padding:4px;justify-content:center;flex-wrap:wrap">
 <button onclick="attack()" style="background:#a00;color:#fff;border:none;padding:8px 14px;font-weight:bold;border-radius:4px">⚔️ ATACAR</button>
 <button onclick="heal()" style="background:#0a0;color:#fff;border:none;padding:8px 14px;font-weight:bold;border-radius:4px">🧪 POTION</button>
-<button onclick="showMsg('Você usou Exori!')" style="background:#00a;color:#fff;border:none;padding:8px 14px;font-weight:bold;border-radius:4px">✨ SPELL</button>
-<button onclick="showMsg('Loot despachado para Depot! +500 gold')" style="background:#c90;color:#000;border:none;padding:8px 14px;font-weight:bold;border-radius:4px">📦 DEPOT</button>
+<button onclick="openDepot()" style="background:#c90;color:#000;border:none;padding:8px 14px;font-weight:bold;border-radius:4px">📦 DEPOT</button>
+<button onclick="talkNpc()" style="background:#00a;color:#fff;border:none;padding:8px 14px;font-weight:bold;border-radius:4px">💬 FALAR NPC</button>
 </div>
 </div>
 <div class="right">
-<div class="panel"><h3>🗺️ Minimap - Thais</h3><div class="mini" id="mini"></div><div style="font-size:10px;text-align:center">Thais - 32123, 32123, 7</div></div>
-<div class="panel"><h3>❤️ Vitals</h3>
-<div class="vital">Health</div><div class="bar"><i id="hpFill" style="background:#00c000;width:100%"></i><span id="hpTxt">395 / 395</span></div>
+<div class="panel"><h3>🗺️ Minimap - Thais</h3><div class="mini" id="mini"></div></div>
+<div class="panel"><h3>❤️ Vitals</h3><div class="vital">Health</div><div class="bar"><i id="hpFill" style="background:#00c000;width:100%"></i><span id="hpTxt">395 / 395</span></div>
 <div class="vital">Mana</div><div class="bar"><i id="mpFill" style="background:#0066ff;width:95%"></i><span id="mpTxt">385 / 405</span></div>
-<div class="vital">Experience - Lv <span id="lvTxt">29</span></div><div class="bar"><i style="background:#ffaa00;width:69%"></i><span>69.6% para Lv 30</span></div>
-<div style="font-size:10px">Stamina: 39:12h &nbsp; Soul: 100</div>
-</div>
-<div class="panel"><h3>🎒 Inventário</h3><div class="invGrid">
-<div class="slot">🪖</div><div class="slot">🛡️</div><div class="slot">⚔️</div><div class="slot">👢</div>
-<div class="slot">🧪<small>100</small></div><div class="slot">🧪<small>100</small></div><div class="slot">🍖<small>20</small></div><div class="slot">💎</div>
-<div class="slot">📦</div><div class="slot">🗝️</div><div class="slot">🧀</div><div class="slot">+</div>
-</div><div style="font-size:10px;margin-top:3px">Cap: 420 oz &nbsp; Gold: <b id="goldSide">23.474</b></div></div>
+<div class="vital">Exp Lv <span id="lvTxt">29</span></div><div class="bar"><i style="background:#ffaa00;width:69%"></i><span>69.6%</span></div></div>
+<div class="panel"><h3>🎒 Inventário</h3><div class="invGrid"><div class="slot">🪖</div><div class="slot">🛡️</div><div class="slot">⚔️</div><div class="slot">👢</div><div class="slot">🧪<small>100</small></div><div class="slot">🧪<small>100</small></div><div class="slot">🍖<small>20</small></div><div class="slot">💎</div><div class="slot">📦</div><div class="slot">🗝️</div><div class="slot">🧀</div><div class="slot" onclick="openDepot()">+</div></div></div>
 <div class="panel"><h3>⚔️ Battle List</h3><div class="battle" id="battle"></div></div>
-<div class="panel"><h3>📊 Skills</h3><div style="font-size:11px">⚔️ Sword: 45<br>🛡️ Shielding: 38<br>🏹 Distance: 22<br>✨ Magic: 18<br>🎣 Fishing: 10</div></div>
+<div class="panel"><h3>📊 Skills</h3><div style="font-size:11px">⚔️ Sword: 45<br>🛡️ Shielding: 38<br>✨ Magic: 18</div></div>
 </div>
 </div>
 <div class="bottom">
-<div class="tabs"><button class="active">Local Chat</button><button onclick="showMsg('Global - 16343 players online')">Global</button><button onclick="showMsg('Loot: Você lootou 50 gold')">Loot</button><button>Party</button></div>
-<div id="chat"><div><b style="color:#0000ff">Pizetta Healer:</b> Welcome to Thais!</div><div><b style="color:#008000">Murwyn:</b> Bora hunt?</div><div><b style="color:#ff00ff">Ribaski:</b> Compro loot!</div><div><b style="color:#ff0000">Loot:</b> Você matou um Rat. Loot: 2 gold.</div></div>
-<div class="chatIn"><input id="chatIn" placeholder="Diga algo... (ex: hi, exori, bora hunt)"><button onclick="sendChat()">Falar</button></div>
-<div class="ctrls"><button onclick="move(-1,0)">◀️</button><button onclick="move(0,-1)">🔼</button><button onclick="move(0,1)">🔽</button><button onclick="move(1,0)">▶️</button><button onclick="attack()">⚔️</button><button onclick="heal()">🧪</button><button onclick="showMsg('Follow ligado!')">👣</button></div>
+<div class="tabs"><button class="active">Local Chat</button><button>Loot</button></div>
+<div id="chat"><div><b style="color:#0000ff">Pizetta Healer:</b> Hi! Fala hi pra conversar comigo!</div><div><b style="color:#008000">Dica:</b> Escreva hi, trade, heal, bye no chat!</div></div>
+<div class="chatIn"><input id="chatIn" placeholder="Digite hi, trade, heal, bye..."><button onclick="sendChat()">Falar</button></div>
+<div class="ctrls"><button onclick="move(-1,0)">◀️</button><button onclick="move(0,-1)">🔼</button><button onclick="move(0,1)">🔽</button><button onclick="move(1,0)">▶️</button><button onclick="attack()">⚔️</button><button onclick="heal()">🧪</button></div>
 </div>
-<div id="start">
-<h1>HUNTER999x</h1><p style="color:#aaa">Tibia Real - Thais</p>
+
+<div id="npcBox"><h3 id="npcTitle">🧝 Pizetta Healer</h3><p id="npcText">Olá!</p><div style="padding:0 10px 10px"><button onclick="npcReply('trade')">Trade</button><button onclick="npcReply('heal')">Heal</button><button onclick="closeNpc()">Bye</button></div></div>
+<div id="depotBox"><h3>📦 Depot - Thais</h3><p>Seu baú:<br>🪖 Helmet x1<br>⚔️ Sword x2<br>🧪 Potion x100<br>🍖 Meat x20<br>💎 Crystal x5<br>🪙 Gold: <span id="goldDepot">23.474</span></p><div style="padding:0 10px 10px"><button onclick="document.getElementById('depotBox').style.display='none'">Fechar</button><button onclick="heal();document.getElementById('depotBox').style.display='none'">Pegar Potion</button></div></div>
+<div id="shopBox"><h3>🏪 Loja - Pizetta</h3><p>🧪 Health Potion - 50 gold<br>🧪 Mana Potion - 50 gold<br>⚔️ Sword - 500 gold<br>🛡️ Shield - 300 gold</p><div style="padding:0 10px 10px"><button onclick="buy('Health Potion',50)">Comprar Health</button><button onclick="buy('Mana Potion',50)">Comprar Mana</button><button onclick="buy('Sword',500)">Comprar Sword</button><button onclick="document.getElementById('shopBox').style.display='none'">Fechar</button></div></div>
+
+<div id="start"><h1>HUNTER999x</h1><p style="color:#aaa">Tibia Real + NPC - Thais</p>
 <div class="vocs">
-<button onclick="pick('Knight','🧔')"><div style="font-size:30px">🧔</div><b>Knight</b><br><small>HP alto, Exori</small></button>
-<button onclick="pick('Sorcerer','🧙')"><div style="font-size:30px">🧙</div><b>Sorcerer</b><br><small>SD, Exori Flam</small></button>
-<button onclick="pick('Druid','🧝')"><div style="font-size:30px">🧝</div><b>Druid</b><br><small>Heal, Exori Ico</small></button>
-<button onclick="pick('Paladin','🏹')"><div style="font-size:30px">🏹</div><b>Paladin</b><br><small>Exori San, Bolt</small></button>
+<button onclick="pick('Knight','🧔')"><div style="font-size:30px">🧔</div><b>Knight</b></button>
+<button onclick="pick('Sorcerer','🧙')"><div style="font-size:30px">🧙</div><b>Sorcerer</b></button>
+<button onclick="pick('Druid','🧝')"><div style="font-size:30px">🧝</div><b>Druid</b></button>
+<button onclick="pick('Paladin','🏹')"><div style="font-size:30px">🏹</div><b>Paladin</b></button>
 </div>
-<input id="nick" placeholder="Seu nome (ex: Bololo)" style="padding:12px;width:100%;max-width:420px;background:#111;color:#fff;border:1px solid #555;border-radius:6px;text-align:center;font-size:16px">
+<input id="nick" placeholder="Seu nome" style="padding:12px;width:100%;max-width:420px;background:#111;color:#fff;border:1px solid #555;border-radius:6px;text-align:center;font-size:16px">
 <br><br><button id="play" onclick="startGame()">▶️ ENTRAR EM THAIS</button>
-<p style="font-size:11px;color:#666;margin-top:10px">WASD / Setas para andar • Espaço para atacar</p>
+<p style="font-size:11px;color:#666;margin-top:10px">Dica: Fale hi perto do NPC!</p>
 </div>
 <script>
 let mapEl=document.getElementById('map'), cols=15, rows=11;
-let P={x:7,y:5,name:'Bololo',emoji:'🧔',hp:395,mhp:395,mp:385,mmp:405,gold:23474,lv:29,exp:69};
+let P={x:7,y:5,name:'A lenda',emoji:'🧔',hp:395,mhp:395,mp:385,mmp:405,gold:23474,lv:29};
 let Mons=[
-{x:3,y:2,name:'Pizetta Healer',emoji:'🧝',hp:100},
-{x:5,y:2,name:'Murwyn',emoji:'🧙',hp:100},
-{x:11,y:1,name:'Ribaski',emoji:'🐴',hp:100},
+{x:3,y:2,name:'Pizetta Healer',emoji:'🧝',hp:100,isNpc:true},
+{x:5,y:2,name:'Murwyn',emoji:'🧙',hp:100,isNpc:true},
+{x:11,y:1,name:'Ribaski',emoji:'🐴',hp:100,isNpc:true},
 {x:2,y:7,name:'Rat',emoji:'🐀',hp:60},
 {x:12,y:8,name:'Snake',emoji:'🐍',hp:80},
 {x:10,y:3,name:'Rotworm',emoji:'🐛',hp:90},
-{x:4,y:9,name:'Troll',emoji:'👹',hp:120}
+{x:4,y:9,name:'Troll',emoji:'👹',hp:120},
+{x:13,y:5,name:'Dragon',emoji:'🐉',hp:500},
+{x:1,y:4,name:'Demon',emoji:'😈',hp:800}
 ];
 let walls=new Set(['0,0','1,0','2,0','3,0','0,1','0,2','0,3','0,4','0,5','0,6','0,7','0,8','0,9','0,10','14,0','14,1','14,2','14,3','14,4','14,5','14,6','14,7','14,8','14,9','14,10']);
-let grass=new Set(['1,9','2,9','1,10','2,10','12,9','13,9','12,10','13,10','1,1','2,1']);
-let house=new Set(['9,1','10,1','11,1','9,2','10,2','11,2']);
-let roof=new Set(['9,0','10,0','11,0']);
+let grass=new Set(['1,9','2,9','1,10','2,10','12,9','13,9','12,10','13,10']);
+let house=new Set(['9,1','10,1','11,1','9,2','10,2','11,2']); let roof=new Set(['9,0','10,0','11,0']);
 function build(){
 mapEl.innerHTML='';
 for(let y=0;y<rows;y++) for(let x=0;x<cols;x++){
@@ -131,51 +111,55 @@ if(walls.has(x+','+y)) d.className+=' wall';
 if(grass.has(x+','+y)) d.className+=' grass';
 if(house.has(x+','+y)) d.className+=' wood';
 if(roof.has(x+','+y)) d.className+=' roof';
-if(x==6&&y==1) d.className+=' water';
-if(x==7&&y==1) d.className+=' water';
-if(x==7&&y==8) d.className+=' sand';
-if(x==8&&y==8) d.className+=' sand';
+if(x==6&&y==1||x==7&&y==1) d.className+=' water';
 if(x==6&&y==7) d.innerHTML='<div style="text-align:center;font-size:20px">🌳</div>';
 if(x==13&&y==7) d.innerHTML='<div style="text-align:center;font-size:20px">🌳</div>';
 if(x==10&&y==4) d.innerHTML='<div style="text-align:center;font-size:20px">📦</div>';
-if(x==3&&y==5) d.innerHTML='<div style="text-align:center;font-size:20px">🪙</div>';
 mapEl.appendChild(d);
 }
 let mini=document.getElementById('mini'); mini.innerHTML='';
-for(let i=0;i<165;i++){ let m=document.createElement('div'); m.style.background=['#8f8f8f','#4a8a2a','#5a3a1a','#1a5aff'][Math.floor(Math.random()*4)]; mini.appendChild(m); }
+for(let i=0;i<165;i++){ let m=document.createElement('div'); m.style.background=['#8f8f8f','#4a8a2a','#5a3a1a'][Math.floor(Math.random()*3)]; mini.appendChild(m); }
 render(); updateBattle();
 }
 function render(){
 document.querySelectorAll('.ent').forEach(e=>e.remove());
 Mons.forEach(m=>{
-let e=document.createElement('div'); e.className='ent'; e.style.left=((m.x+0.5)/cols*100)+'%'; e.style.top=((m.y+0.5)/rows*100)+'%';
-e.innerHTML=`<div class="nm">${m.name}</div><div class="hp"><i style="width:${m.hp}%"></i></div><div class="sp">${m.emoji}</div>`; mapEl.appendChild(e);
+let e=document.createElement('div'); e.className='ent'+(m.isNpc?' npc':''); e.style.left=((m.x+0.5)/cols*100)+'%'; e.style.top=((m.y+0.5)/rows*100)+'%';
+e.innerHTML=`<div class="nm">${m.name}</div><div class="hp"><i style="width:${Math.max(0,m.hp/8)}%"></i></div><div class="sp">${m.emoji}</div>`; mapEl.appendChild(e);
 });
 let p=document.createElement('div'); p.className='ent me'; p.style.left=((P.x+0.5)/cols*100)+'%'; p.style.top=((P.y+0.5)/rows*100)+'%';
 p.innerHTML=`<div class="nm">${P.name}</div><div class="hp"><i style="width:${P.hp/P.mhp*100}%"></i></div><div class="sp" style="font-size:30px">${P.emoji}</div>`; mapEl.appendChild(p);
 }
-function move(dx,dy){
-let nx=P.x+dx, ny=P.y+dy; if(nx<0||nx>=cols||ny<0||ny>=rows) return; if(walls.has(nx+','+ny)) return; P.x=nx; P.y=ny; render();
-let m=Mons.find(m=>m.x==nx&&m.y==ny); if(m) attack();
-}
+function move(dx,dy){ let nx=P.x+dx, ny=P.y+dy; if(nx<0||nx>=cols||ny<0||ny>=rows) return; if(walls.has(nx+','+ny)) return; P.x=nx; P.y=ny; render(); let m=Mons.find(m=>m.x==nx&&m.y==ny); if(m&&!m.isNpc) attack(); if(m&&m.isNpc) talkNpc(m.name); if(nx==10&&ny==4) openDepot(); }
 function attack(){
-let t=Mons.find(m=>Math.abs(m.x-P.x)<=1&&Math.abs(m.y-P.y)<=1);
-if(!t){ showMsg('Nenhum monstro perto! Ande até ele e ataque.'); return; }
-let dmg=Math.floor(Math.random()*120)+50; t.hp-=dmg;
-addChat('Loot',`Você hitou ${dmg} no ${t.name} (HP ${Math.max(0,t.hp)})`);
-showMsg(`⚔️ Você hitou ${dmg} no ${t.name}!`);
-if(t.hp<=0){ Mons=Mons.filter(m=>m!==t); let g=Math.floor(Math.random()*200)+50; P.gold+=g; P.exp+=5; addChat('Loot',`Você matou ${t.name}! Loot: ${g} gold.`); showMsg(`Você matou ${t.name}! +${g} gold +EXP`); document.getElementById('goldTop').textContent=P.gold.toLocaleString('pt-BR'); document.getElementById('goldSide').textContent=P.gold.toLocaleString('pt-BR'); setTimeout(()=>{ Mons.push({x:Math.floor(Math.random()*13)+1,y:Math.floor(Math.random()*9)+1,name:'Rat',emoji:'🐀',hp:60}); render(); updateBattle(); },2000); }
+let t=Mons.find(m=>!m.isNpc&&Math.abs(m.x-P.x)<=1&&Math.abs(m.y-P.y)<=1);
+if(!t){ showMsg('Nenhum monstro perto!'); return; }
+let dmg=Math.floor(Math.random()*120)+50; t.hp-=dmg; addChat('Loot',`Você hitou ${dmg} no ${t.name}`);
+if(t.hp<=0){ Mons=Mons.filter(m=>m!==t); let g=Math.floor(Math.random()*200)+50; P.gold+=g; addChat('Loot',`Você matou ${t.name}! Loot: ${g} gold.`); showMsg(`Você matou ${t.name}! +${g} gold`); document.getElementById('goldTop').textContent=P.gold.toLocaleString('pt-BR'); document.getElementById('goldDepot').textContent=P.gold.toLocaleString('pt-BR'); setTimeout(()=>{ Mons.push({x:Math.floor(Math.random()*13)+1,y:Math.floor(Math.random()*9)+1,name:'Rat',emoji:'🐀',hp:60}); render(); updateBattle(); },2000); }
 render(); updateBattle();
 }
-function heal(){ P.hp=P.mhp; P.mp=P.mmp; document.getElementById('hpTxt').textContent=P.hp+' / '+P.mhp; document.getElementById('mpTxt').textContent=P.mp+' / '+P.mmp; document.getElementById('hpFill').style.width='100%'; document.getElementById('mpFill').style.width='95%'; showMsg('Você usou Ultimate Health Potion!'); addChat('Loot','Você usou potion.'); }
+function heal(){ P.hp=P.mhp; P.mp=P.mmp; document.getElementById('hpTxt').textContent=P.hp+' / '+P.mhp; document.getElementById('mpTxt').textContent=P.mp+' / '+P.mmp; document.getElementById('hpFill').style.width='100%'; showMsg('Você usou Potion!'); }
 function updateBattle(){ document.getElementById('battle').innerHTML=Mons.map(m=>`<div>${m.emoji} ${m.name} - ${m.hp} HP</div>`).join(''); }
 function showMsg(t){ let m=document.getElementById('msg'); m.textContent=t; m.style.display='block'; setTimeout(()=>m.style.display='none',2200); }
 function addChat(who,txt){ let c=document.getElementById('chat'); c.innerHTML+=`<div><b>${who}:</b> ${txt}</div>`; c.scrollTop=c.scrollHeight; }
-function sendChat(){ let i=document.getElementById('chatIn'); if(!i.value) return; addChat(P.name,i.value); i.value=''; }
-function pick(v,e){ P.emoji=e; document.querySelectorAll('.vocs button').forEach(b=>b.style.borderColor='#555'); event.currentTarget.style.borderColor='#ffd700'; showMsg('Você escolheu '+v); }
-function startGame(){ let n=document.getElementById('nick').value.trim(); if(n) P.name=n; document.getElementById('start').style.display='none'; showMsg('Bem-vindo a Thais, '+P.name+'!'); }
+function sendChat(){
+let i=document.getElementById('chatIn'); let txt=i.value.trim(); if(!txt) return; addChat(P.name,txt); i.value='';
+let low=txt.toLowerCase();
+let near=Mons.find(m=>m.isNpc&&Math.abs(m.x-P.x)<=2&&Math.abs(m.y-P.y)<=2);
+if(low=='hi'||low=='hello'){ if(near){ addChat(near.name,`Olá ${P.name}! Quer trade, heal ou bye?`); talkNpc(near.name); } else addChat('Sistema','Chegue perto de um NPC e fale hi!'); }
+if(low=='trade'){ if(near){ document.getElementById('shopBox').style.display='block'; addChat(near.name,'Aqui está minha loja!'); } }
+if(low=='heal'||low=='heal me'){ heal(); addChat('Pizetta','Você foi curado!'); }
+if(low=='bye'){ addChat(near?near.name:'NPC','Bye! Volte sempre!'); closeNpc(); }
+}
+function talkNpc(name){ let n=name||'Pizetta Healer'; document.getElementById('npcTitle').textContent='🧝 '+n; document.getElementById('npcText').textContent=`Olá ${P.name}! Eu sou ${n}. Quer trade, heal ou bye? Escreva no chat ou clique nos botões!`; document.getElementById('npcBox').style.display='block'; }
+function closeNpc(){ document.getElementById('npcBox').style.display='none'; }
+function npcReply(a){ if(a=='trade') document.getElementById('shopBox').style.display='block'; if(a=='heal'){ heal(); addChat('Pizetta','Você foi curado!'); } closeNpc(); }
+function openDepot(){ document.getElementById('depotBox').style.display='block'; addChat('Sistema','Você abriu o Depot!'); }
+function buy(item,price){ if(P.gold>=price){ P.gold-=price; document.getElementById('goldTop').textContent=P.gold.toLocaleString('pt-BR'); showMsg(`Você comprou ${item} por ${price} gold!`); addChat('Loot',`Você comprou ${item}`); } else showMsg('Sem gold suficiente!'); }
+function pick(v,e){ P.emoji=e; document.querySelectorAll('.vocs button').forEach(b=>b.style.borderColor='#555'); event.currentTarget.style.borderColor='#ffd700'; }
+function startGame(){ let n=document.getElementById('nick').value.trim(); if(n) P.name=n; document.getElementById('start').style.display='none'; showMsg('Bem-vindo a Thais, '+P.name+'! Fale hi no NPC!'); }
 document.addEventListener('keydown',e=>{ if(e.key=='w'||e.key=='ArrowUp') move(0,-1); if(e.key=='s'||e.key=='ArrowDown') move(0,1); if(e.key=='a'||e.key=='ArrowLeft') move(-1,0); if(e.key=='d'||e.key=='ArrowRight') move(1,0); if(e.key==' ') attack(); });
-setInterval(()=>{ Mons.forEach(m=>{ if(Math.random()<0.25){ m.x=Math.max(0,Math.min(14,m.x+Math.floor(Math.random()*3)-1)); m.y=Math.max(0,Math.min(10,m.y+Math.floor(Math.random()*3)-1)); } }); render(); },2000);
+setInterval(()=>{ Mons.forEach(m=>{ if(!m.isNpc&&Math.random()<0.25){ m.x=Math.max(0,Math.min(14,m.x+Math.floor(Math.random()*3)-1)); m.y=Math.max(0,Math.min(10,m.y+Math.floor(Math.random()*3)-1)); } }); render(); },2000);
 build();
 </script>
 </body>
