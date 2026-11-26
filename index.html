@@ -3,75 +3,134 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>HUNTER999x - Cliente</title>
-<link rel="manifest" href="data:application/json,{}">
-<meta name="theme-color" content="#0a0a0a">
+<title>HUNTER999x - MMORPG 2D</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Tahoma,Verdana,sans-serif}
-body{background:#0a0a0a;color:#fff;height:100vh;overflow:hidden}
-.screen{display:none;height:100vh;flex-direction:column}.screen.active{display:flex}
-.center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;background:radial-gradient(#2a1a0a,#000)}
-.logo{font-size:48px;font-weight:900;color:#e8c33a;text-shadow:0 0 20px #f00}.logo b{color:#fff}
-.sub{color:#aaa;font-size:13px;margin:4px 0 16px}
-.card{width:100%;max-width:380px;background:#1a1a1a;border:1px solid #444;border-radius:10px;padding:16px}
-.card input,.card select{width:100%;padding:12px;margin:6px 0;background:#000;color:#fff;border:1px solid #555;border-radius:6px;font-size:14px;text-align:center}
-.btn{width:100%;padding:13px;margin:6px 0;border:none;border-radius:8px;font-size:16px;font-weight:900;cursor:pointer}
-.btn-green{background:#28a745;color:#fff}.btn-blue{background:#2a4a8a;color:#fff}.btn-gold{background:#e8c33a;color:#000}
-.link{color:#e8c33a;font-size:12px;margin-top:8px;cursor:pointer;text-decoration:underline}
-.top{height:42px;background:#1a140a;border-bottom:2px solid #5a3a00;display:flex;align-items:center;gap:8px;padding:0 8px;font-size:12px;white-space:nowrap;overflow-x:auto}
-#game{flex:1;position:relative;background:#3a2a1a;overflow:hidden}
-#map{position:absolute;inset:0;display:grid;grid-template-columns:repeat(15,1fr);grid-template-rows:repeat(11,1fr)}
-.tile{border:.5px solid rgba(0,0,0,.3)}.terra{background:#6b4a22}.pedra{background:#5a5a5a}.grama{background:#2a5a1a}.madeira{background:#8a6a2a}.telhado{background:#4a1a0a}.parede{background:#6a5a3a}.agua{background:#0a3a8a}.areia{background:#c9b06a}
-.ent{position:absolute;transform:translate(-50%,-70%);text-align:center;transition:all .3s;pointer-events:none}.ent .nm{font-size:7px;background:rgba(0,0,0,.7);padding:1px 3px;border-radius:2px;white-space:nowrap}.ent .hp{width:22px;height:3px;background:#000;margin:1px auto}.ent .hp i{display:block;height:100%;background:#0f0}.ent .sp{font-size:16px}.ent.me .sp{font-size:19px}.ent.me .nm{color:#ff0}
-.bottom{background:#1a140a;border-top:2px solid #5a3a00;padding:5px}
-.vitals{display:flex;gap:6px}.vital{flex:1}.bar{height:13px;background:#000;border:1px solid #555;position:relative}.bar i{position:absolute;left:0;top:0;bottom:0}.bar span{position:absolute;inset:0;text-align:center;font-size:9px;line-height:13px}
-.idleBar{display:flex;gap:4px;margin:4px 0}.idleBar button{flex:1;background:#2a2a2a;border:1px solid #555;color:#fff;padding:9px 4px;font-size:11px;font-weight:bold;border-radius:6px}
-.chat{height:48px;background:#000;border:1px solid #333;overflow-y:auto;padding:4px;font-size:11px}
-.chatIn{display:flex;gap:4px;margin-top:4px}.chatIn input{flex:1;background:#000;color:#fff;border:1px solid #555;padding:7px}.chatIn button{background:#2a4a8a;color:#fff;border:none;padding:7px 12px;font-weight:bold}
-.ctrls{display:flex;gap:4px;justify-content:center;margin-top:4px}.ctrls button{background:#222;color:#fff;border:1px outset #555;width:48px;height:38px;font-size:16px;border-radius:4px}
-#msg{position:absolute;top:46px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.92);color:#ff0;padding:8px 12px;border:1px solid #ff0;border-radius:6px;font-size:12px;z-index:99;display:none;max-width:90%;text-align:center}
-.vocs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;width:100%;max-width:380px;margin:12px 0}.vocs button{background:#1a1a1a;border:2px solid #555;padding:12px;color:#fff;border-radius:8px;cursor:pointer}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Tahoma,sans-serif}
+body{background:#000;color:#fff;overflow:hidden;height:100vh;display:flex;flex-direction:column}
+.top{height:44px;background:linear-gradient(#2a1a05,#0a0a0a);border-bottom:2px solid #e8c33a;display:flex;align-items:center;gap:10px;padding:0 10px;font-size:13px}
+.logo{font-weight:900;font-size:20px;color:#e8c33a}.logo b{color:#fff}
+#wrap{flex:1;position:relative;overflow:hidden;background:#1a2a0a}
+canvas{width:100%;height:100%;display:block}
+.bottom{background:#111;border-top:2px solid #e8c33a;padding:6px}
+.bars{display:flex;gap:6px}.barBox{flex:1}.barBox b{font-size:10px}
+.bar{height:14px;background:#000;border:1px solid #555;position:relative;overflow:hidden;border-radius:7px}.bar i{position:absolute;left:0;top:0;bottom:0;transition:width .3s}.bar span{position:absolute;inset:0;text-align:center;font-size:10px;line-height:14px}
+.btns{display:flex;gap:5px;margin-top:6px}.btns button{flex:1;background:linear-gradient(#333,#111);border:1px solid #555;color:#fff;padding:11px 4px;font-weight:900;border-radius:8px;font-size:12px}
+.btns button.on{background:linear-gradient(#00a000,#006000)}
+#chat{height:48px;background:#000;border:1px solid #333;overflow-y:auto;padding:4px;font-size:11px;margin-top:5px}
+.chatIn{display:flex;gap:4px;margin-top:4px}.chatIn input{flex:1;background:#000;color:#fff;border:1px solid #555;padding:8px}.chatIn button{background:#e8c33a;color:#000;border:none;padding:8px 14px;font-weight:900}
+.joy{display:flex;gap:5px;justify-content:center;margin-top:5px}.joy button{background:#222;border:1px solid #555;color:#fff;width:52px;height:42px;font-size:18px;border-radius:10px}
+#start{position:fixed;inset:0;background:radial-gradient(#2a1a05,#000);z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center}
+#start h1{font-size:50px;color:#e8c33a;text-shadow:0 0 30px #f00}
+.vocs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;width:100%;max-width:400px;margin:15px 0}.vocs button{background:#1a1a1a;border:2px solid #555;padding:16px;color:#fff;border-radius:10px}
+#play{background:#28a745;color:#fff;border:none;padding:14px 50px;font-size:20px;font-weight:900;border-radius:10px}
+input[type=text],input[type=password]{width:100%;max-width:400px;padding:12px;background:#111;color:#fff;border:1px solid #555;border-radius:8px;text-align:center;margin:5px 0}
 </style>
 </head>
 <body>
-
-<!-- LOGIN -->
-<div id="scr-login" class="screen active"><div class="center"><div class="logo">HUNTER<b>999x</b></div><div class="sub">CLIENTE OFICIAL • TIBIA IDLE • v1.0</div><div class="card"><h3>🔐 LOGIN</h3><input id="loginEmail" placeholder="Email"><input id="loginPass" type="password" placeholder="Senha"><button class="btn btn-green" onclick="doLogin()">▶️ ENTRAR NO JOGO</button><button class="btn btn-blue" onclick="showScreen('register')">✨ CRIAR CONTA GRÁTIS</button><div class="link" onclick="showScreen('register')">Ainda não tem conta? Criar agora</div><p style="font-size:10px;color:#666;margin-top:10px">Cliente HUNTER999x • Salva no seu aparelho • Jogue offline</p></div></div></div>
-
-<!-- CRIAR CONTA -->
-<div id="scr-register" class="screen"><div class="center"><div class="logo">HUNTER<b>999x</b></div><div class="sub">Criar sua conta</div><div class="card"><input id="regName" placeholder="Nome do personagem - ex: A lenda"><input id="regEmail" placeholder="Seu email"><input id="regPass" type="password" placeholder="Crie uma senha"><select id="regVoc"><option value="🧔">Knight - HP Alto</option><option value="🧙">Sorcerer - Dano Alto</option><option value="🧝">Druid - Heal</option><option value="🏹">Paladin - Distância</option></select><button class="btn btn-green" onclick="doRegister()">✅ CRIAR CONTA E JOGAR</button><button class="btn btn-blue" onclick="showScreen('login')">⬅️ Já tenho conta</button></div></div></div>
-
-<!-- JOGO -->
-<div id="scr-game" class="screen">
-<div class="top"><div style="font-weight:900;color:#e8c33a">HUNTER<b style="color:#fff">999x</b></div><span>🪙 <b id="goldTop" style="color:#ffd700">0</b></span><span>Lv <b id="lvTop">1</b></span><span>🟢 <b id="charNameTop">A lenda</b></span><span style="margin-left:auto" onclick="logout()">🚪 Sair</span></div>
-<div id="game"><div id="msg"></div><div id="map"></div></div>
-<div class="bottom"><div class="vitals"><div class="vital">❤️<div class="bar"><i id="hpFill" style="background:#00c000;width:100%"></i><span id="hpTxt">100 / 100</span></div></div><div class="vital">💙<div class="bar"><i id="mpFill" style="background:#0066ff;width:100%"></i><span id="mpTxt">100 / 100</span></div></div><div class="vital">⭐<div class="bar"><i id="expFill" style="background:#ffaa00;width:0%"></i><span id="expTxt">0%</span></div></div></div><div class="idleBar"><button id="autoBtn" onclick="toggleAuto()">🤖 AUTO: ON</button><button onclick="collectLoot()" style="background:#8a6a00">📦 COLETAR</button><button onclick="heal()">🧪 POTION</button><button onclick="attack()">⚔️ ATACAR</button></div><div class="chat" id="chat"><div><b>HUNTER999x:</b> Bem-vindo! Auto Hunt ligado!</div></div><div class="chatIn"><input id="chatIn" placeholder="hi, trade, heal..."><button onclick="sendChat()">Falar</button></div><div class="ctrls"><button onclick="move(-1,0)">◀️</button><button onclick="move(0,-1)">🔼</button><button onclick="move(0,1)">🔽</button><button onclick="move(1,0)">▶️</button><button onclick="attack()">⚔️</button><button onclick="heal()">🧪</button></div></div>
+<div class="top"><div class="logo">HUNTER<b>999x</b></div><span>🪙 <b id="gold" style="color:#ffd700">0</b></span><span>Lv <b id="lv">1</b></span><span id="nickTop">Teste</span><span style="margin-left:auto">🟢 16.343</span></div>
+<div id="wrap"><canvas id="cv"></canvas></div>
+<div class="bottom">
+<div class="bars"><div class="barBox"><b>❤️ HP</b><div class="bar"><i id="hpF" style="background:linear-gradient(#0f0,#060);width:100%"></i><span id="hpT">100/100</span></div></div><div class="barBox"><b>💙 MANA</b><div class="bar"><i id="mpF" style="background:linear-gradient(#0af,#005);width:100%"></i><span id="mpT">100/100</span></div></div><div class="barBox"><b>⭐ EXP</b><div class="bar"><i id="xpF" style="background:linear-gradient(#ff0,#f80);width:0%"></i><span id="xpT">0%</span></div></div></div>
+<div class="btns"><button id="autoB" class="on" onclick="toggleAuto()">🤖 AUTO: ON</button><button onclick="collect()">📦 COLETAR</button><button onclick="heal()">🧪 POTION</button><button onclick="attack()">⚔️ ATACAR</button></div>
+<div id="chat"><div><b style="color:#ff0">HUNTER999x:</b> MMORPG 2D Animado ligado! Seu char caça sozinho!</div></div>
+<div class="chatIn"><input id="chatIn" placeholder="hi, trade, heal..."><button onclick="sendChat()">Falar</button></div>
+<div class="joy"><button onclick="move(-1,0)">◀️</button><button onclick="move(0,-1)">🔼</button><button onclick="move(0,1)">🔽</button><button onclick="move(1,0)">▶️</button><button onclick="attack()">⚔️</button></div>
 </div>
-
+<div id="start"><h1>HUNTER999x</h1><p style="color:#aaa">MMORPG 2D ANIMADO • Thais</p><div class="vocs"><button onclick="pick('🧔',this)"><div style="font-size:30px">🧔</div><b>Knight</b></button><button onclick="pick('🧙',this)"><div style="font-size:30px">🧙</div><b>Sorcerer</b></button><button onclick="pick('🧝',this)"><div style="font-size:30px">🧝</div><b>Druid</b></button><button onclick="pick('🏹',this)"><div style="font-size:30px">🏹</div><b>Paladin</b></button></div><input type="text" id="nick" placeholder="Seu nome - ex: A lenda"><button id="play" onclick="start()">▶️ ENTRAR NO MUNDO</button><p style="font-size:11px;color:#666;margin-top:8px">Animação lisa • Partículas • Sem grade Atari</p></div>
 <script>
-let P={x:7,y:5,name:'A lenda',emoji:'🧔',hp:100,mhp:100,mp:100,mmp:100,gold:0,lv:1,exp:0,auto:true,loot:0};
-let Mons=[{x:3,y:2,name:'Pizetta',emoji:'🧝',hp:100,isNpc:true},{x:5,y:2,name:'Murwyn',emoji:'🧙',hp:100,isNpc:true},{x:2,y:7,name:'Rat',emoji:'🐀',hp:60},{x:12,y:8,name:'Snake',emoji:'🐍',hp:80},{x:10,y:3,name:'Rotworm',emoji:'🐛',hp:90},{x:4,y:9,name:'Troll',emoji:'👹',hp:120},{x:13,y:5,name:'Dragon',emoji:'🐉',hp:500},{x:1,y:4,name:'Demon',emoji:'😈',hp:800},{x:8,y:8,name:'Rat',emoji:'🐀',hp:60}];
-let cols=15,rows=11,mapEl=document.getElementById('map');
-function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('scr-'+id).classList.add('active')}
-function save(){localStorage.setItem('hunter999x',JSON.stringify({name:P.name,emoji:P.emoji,gold:P.gold,lv:P.lv,exp:P.exp}))}
-function load(){let d=localStorage.getItem('hunter999x');if(d){let j=JSON.parse(d);P.name=j.name;P.emoji=j.emoji;P.gold=j.gold;P.lv=j.lv;P.exp=j.exp}}
-function doRegister(){let n=document.getElementById('regName').value.trim();let e=document.getElementById('regEmail').value.trim();let p=document.getElementById('regPass').value;if(!n||!e||!p){alert('Preencha nome, email e senha!');return}P.name=n;P.emoji=document.getElementById('regVoc').value;P.gold=100;P.lv=1;P.exp=0;localStorage.setItem('hunter999x_user',JSON.stringify({email:e,pass:p,name:n}));save();startGame()}
-function doLogin(){let e=document.getElementById('loginEmail').value.trim();let p=document.getElementById('loginPass').value;let u=localStorage.getItem('hunter999x_user');if(!u){alert('Nenhuma conta! Crie uma conta primeiro!');showScreen('register');return}let j=JSON.parse(u);if(j.email==e&&j.pass==p){load();startGame()}else{alert('Email ou senha errada!')}}
-function logout(){save();showScreen('login')}
-function startGame(){showScreen('game');document.getElementById('charNameTop').textContent=P.name;build();updateBars();showMsg('Bem-vindo, '+P.name+'! Auto Hunt ON!')}
-function tileType(x,y){if(y==0&&x>=9&&x<=11)return 'telhado';if(y>=1&&y<=2&&x>=9&&x<=11)return 'madeira';if(x==0||y==0||x==14||y==10)return 'parede';if(y==4||y==5)return 'pedra';if(x==6&&y==1)return 'agua';if((x+y)%5==0)return 'grama';if(x>=12&&y>=9)return 'areia';return 'terra'}
-function build(){mapEl.innerHTML='';for(let y=0;y<rows;y++)for(let x=0;x<cols;x++){let d=document.createElement('div');d.className='tile '+tileType(x,y);mapEl.appendChild(d)}render()}
-function render(){document.querySelectorAll('.ent').forEach(e=>e.remove());Mons.forEach(m=>{let e=document.createElement('div');e.className='ent';e.style.left=((m.x+0.5)/cols*100)+'%';e.style.top=((m.y+0.5)/rows*100)+'%';e.innerHTML=`<div class="nm">${m.name}</div><div class="hp"><i style="width:${Math.max(0,m.hp/8)}%"></i></div><div class="sp">${m.emoji}</div>`;mapEl.appendChild(e)});let p=document.createElement('div');p.className='ent me';p.style.left=((P.x+0.5)/cols*100)+'%';p.style.top=((P.y+0.5)/rows*100)+'%';p.innerHTML=`<div class="nm">${P.name}</div><div class="hp"><i style="width:${P.hp/P.mhp*100}%"></i></div><div class="sp">${P.emoji}</div>`;mapEl.appendChild(p)}
-function move(dx,dy){let nx=P.x+dx,ny=P.y+dy;if(nx<0||nx>=cols||ny<0||ny>=rows)return;P.x=nx;P.y=ny;render();let m=Mons.find(m=>m.x==nx&&m.y==ny);if(m&&!m.isNpc)attack()}
-function attack(){let t=Mons.find(m=>!m.isNpc&&Math.abs(m.x-P.x)<=1&&Math.abs(m.y-P.y)<=1);if(!t)return;let dmg=Math.floor(Math.random()*60)+20;t.hp-=dmg;if(t.hp<=0){Mons=Mons.filter(m=>m!==t);let g=Math.floor(Math.random()*100)+20;P.loot+=g;P.exp+=15;if(P.exp>=100){P.exp=0;P.lv++;P.mhp+=20;P.hp=P.mhp;showMsg('🎉 LEVEL UP! Lv '+P.lv);addChat('Sistema','LEVEL UP Lv '+P.lv)}addChat('Loot',`Matou ${t.name}! +${g} gold no chão`);setTimeout(()=>{Mons.push({x:Math.floor(Math.random()*13)+1,y:Math.floor(Math.random()*9)+1,name:'Rat',emoji:'🐀',hp:60});render()},1500)}updateBars();render();save()}
-function collectLoot(){if(!P.loot){showMsg('Sem loot! Mate monstros!');return}P.gold+=P.loot;showMsg(`📦 Coletou ${P.loot} gold! Total ${P.gold}`);P.loot=0;updateBars();save()}
-function toggleAuto(){P.auto=!P.auto;document.getElementById('autoBtn').textContent=P.auto?'🤖 AUTO: ON':'🤖 AUTO: OFF';showMsg(P.auto?'Auto Hunt ON':'Auto Hunt OFF')}
-function heal(){P.hp=P.mhp;P.mp=P.mmp;updateBars();showMsg('🧪 Potion! HP cheio!')}
-function updateBars(){document.getElementById('hpTxt').textContent=P.hp+' / '+P.mhp;document.getElementById('hpFill').style.width=(P.hp/P.mhp*100)+'%';document.getElementById('mpTxt').textContent=P.mp+' / '+P.mmp;document.getElementById('expTxt').textContent=Math.floor(P.exp)+'%';document.getElementById('expFill').style.width=P.exp+'%';document.getElementById('goldTop').textContent=(P.gold+P.loot).toLocaleString('pt-BR');document.getElementById('lvTop').textContent=P.lv}
-function showMsg(t){let m=document.getElementById('msg');m.textContent=t;m.style.display='block';setTimeout(()=>m.style.display='none',2500)}
-function addChat(w,t){let c=document.getElementById('chat');c.innerHTML+=`<div><b>${w}:</b> ${t}</div>`;c.scrollTop=c.scrollHeight}
-function sendChat(){let i=document.getElementById('chatIn');let t=i.value.trim();if(!t)return;addChat(P.name,t);i.value='';if(t.toLowerCase()=='hi')addChat('Pizetta','Olá '+P.name+'! Quer trade?');if(t.toLowerCase()=='heal'){heal();addChat('Pizetta','Curado!')}}
-setInterval(()=>{if(!P.auto||document.getElementById('scr-game').classList.contains('active')==false)return;let near=Mons.find(m=>!m.isNpc&&Math.abs(m.x-P.x)<=1&&Math.abs(m.y-P.y)<=1);if(near)attack();else{let target=Mons.find(m=>!m.isNpc);if(!target)return;let dx=Math.sign(target.x-P.x),dy=Math.sign(target.y-P.y);if(Math.random()<0.5&&dx!=0)move(dx,0);else if(dy!=0)move(0,dy);else if(dx!=0)move(dx,0)}if(Math.random()<0.1)collectLoot()},900);
+let cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+let W,H; function resize(){W=cv.width=cv.clientWidth*devicePixelRatio;H=cv.height=cv.clientHeight*devicePixelRatio} window.addEventListener('resize',resize); resize();
+let P={x:400,y:300,tx:400,ty:300,name:'Teste',emoji:'🧔',hp:100,mhp:100,mp:100,mmp:100,gold:0,lv:1,exp:0,auto:true,loot:0,walk:0,dir:1,atk:0};
+let Mons=[]; function spawn(m){Mons.push(m)}
+spawn({x:200,y:180,name:'Pizetta',emoji:'🧝',hp:100,isNpc:true,walk:0});
+spawn({x:320,y:180,name:'Murwyn',emoji:'🧙',hp:100,isNpc:true,walk:0});
+spawn({x:600,y:150,name:'Rat',emoji:'🐀',hp:60,walk:0});
+spawn({x:150,y:400,name:'Snake',emoji:'🐍',hp:80,walk:0});
+spawn({x:550,y:400,name:'Rotworm',emoji:'🐛',hp:90,walk:0});
+spawn({x:300,y:500,name:'Troll',emoji:'👹',hp:120,walk:0});
+spawn({x:700,y:300,name:'Dragon',emoji:'🐉',hp:500,walk:0});
+spawn({x:100,y:250,name:'Demon',emoji:'😈',hp:800,walk:0});
+let parts=[],floats=[],trees=[{x:120,y:120},{x:680,y:480},{x:600,y:120},{x:150,y:500}],houses=[{x:480,y:100,w:180,h:120}];
+let cam={x:0,y:0};
+function drawMap(){
+let ox=-cam.x,oy=-cam.y;
+// chão com textura lisa
+for(let gy=0;gy<12;gy++)for(let gx=0;gx<20;gx++){
+let x=gx*60+ox,y=gy*60+oy;
+let isGrass=(gx+gy)%4==0;
+ctx.fillStyle=isGrass?'#2e5a1a':'#6b4a22'; ctx.fillRect(x,y,60,60);
+ctx.fillStyle='rgba(0,0,0,0.08)'; if((gx*gy)%3==0) ctx.fillRect(x+10,y+10,8,8);
+if(isGrass){ctx.fillStyle='#3a7a1a'; ctx.beginPath(); ctx.arc(x+20,y+20,3,0,7); ctx.fill();}
+// pedra central
+if(gy>=5&&gy<=6){ctx.fillStyle='#555'; ctx.fillRect(x,y,60,60); ctx.fillStyle='#777'; ctx.fillRect(x+5,y+5,50,50); ctx.fillStyle='#333'; ctx.fillRect(x+10,y+10,10,5);}
+}
+// casa com sombra e telhado
+houses.forEach(h=>{
+let x=h.x+ox,y=h.y+oy;
+ctx.fillStyle='rgba(0,0,0,0.4)'; ctx.fillRect(x+8,y+8,h.w,h.h);
+ctx.fillStyle='#8a6a2a'; ctx.fillRect(x,y+30,h.w,h.h-30);
+ctx.fillStyle='#4a1a0a'; ctx.beginPath(); ctx.moveTo(x-10,y+30); ctx.lineTo(x+h.w/2,y-10); ctx.lineTo(x+h.w+10,y+30); ctx.fill();
+ctx.fillStyle='#ffd700'; ctx.fillRect(x+70,y+70,40,50);
+ctx.fillStyle='#fff'; ctx.fillRect(x+20,y+50,30,20); ctx.fillRect(x+120,y+50,30,20);
+});
+// árvores com sombra
+trees.forEach(t=>{
+let x=t.x+ox,y=t.y+oy;
+ctx.fillStyle='rgba(0,0,0,0.3)'; ctx.beginPath(); ctx.ellipse(x,y+20,28,8,0,0,7); ctx.fill();
+ctx.fillStyle='#5a3a1a'; ctx.fillRect(x-4,y,8,22);
+ctx.fillStyle='#0a5a0a'; ctx.beginPath(); ctx.arc(x,y-10,26,0,7); ctx.fill();
+ctx.fillStyle='#1a8a1a'; ctx.beginPath(); ctx.arc(x-8,y-18,14,0,7); ctx.fill();
+});
+}
+function drawEnt(e,isMe){
+let x=e.x-cam.x,y=e.y-cam.y;
+let bob=Math.sin(e.walk)*3;
+let scale=isMe?1.25:1;
+ctx.fillStyle='rgba(0,0,0,0.4)'; ctx.beginPath(); ctx.ellipse(x,y+18,18*scale,6,0,0,7); ctx.fill();
+if(e.atk>0){ctx.fillStyle='rgba(255,255,0,0.5)'; ctx.beginPath(); ctx.arc(x,y,28,0,7); ctx.fill();}
+ctx.font=(26*scale)+'px Arial'; ctx.textAlign='center'; ctx.fillText(e.emoji,x,y+bob);
+ctx.fillStyle='rgba(0,0,0,0.7)'; ctx.fillRect(x-18,y-28,36,10);
+ctx.fillStyle='#fff'; ctx.font='bold 7px Tahoma'; ctx.fillText(e.name,x,y-20);
+ctx.fillStyle='#000'; ctx.fillRect(x-16,y-14,32,4);
+ctx.fillStyle=e.hp>50?'#0f0':e.hp>25?'#ff0':'#f00'; ctx.fillRect(x-16,y-14,32*Math.max(0,e.hp/100),4);
+}
+function drawParts(){
+parts.forEach(p=>{ctx.globalAlpha=p.life; ctx.fillStyle=p.color; ctx.beginPath(); ctx.arc(p.x-cam.x,p.y-cam.y,p.size,0,7); ctx.fill(); ctx.globalAlpha=1});
+floats.forEach(f=>{ctx.globalAlpha=f.life; ctx.fillStyle=f.color; ctx.font='900 16px Tahoma'; ctx.textAlign='center'; ctx.fillText(f.txt,f.x-cam.x,f.y-cam.y); ctx.globalAlpha=1});
+}
+function burst(x,y,color,n){for(let i=0;i<n;i++)parts.push({x:x,y:y,vx:(Math.random()-0.5)*6,vy:(Math.random()-0.5)*6-2,life:1,size:Math.random()*4+2,color:color})}
+function loop(){
+ctx.clearRect(0,0,W,H);
+// câmera segue player liso
+cam.x+=(P.x-W/2/2-cam.x)*0.08; cam.y+=(P.y-H/2/2-cam.y)*0.08;
+drawMap();
+Mons.forEach(m=>drawEnt(m,false)); drawEnt(P,true); drawParts();
+// atualizar
+P.x+=(P.tx-P.x)*0.15; P.y+=(P.ty-P.y)*0.15; P.walk+=0.2; if(P.atk>0)P.atk--;
+Mons.forEach(m=>{m.walk+=0.15; if(!m.isNpc&&Math.random()<0.01){m.x+= (Math.random()-0.5)*20; m.y+=(Math.random()-0.5)*20}});
+parts.forEach(p=>{p.x+=p.vx; p.y+=p.vy; p.vy+=0.2; p.life-=0.03}); parts=parts.filter(p=>p.life>0);
+floats.forEach(f=>{f.y-=1; f.life-=0.02}); floats=floats.filter(f=>f.life>0);
+requestAnimationFrame(loop);
+}
+function move(dx,dy){P.tx+=dx*45; P.ty+=dy*45; P.tx=Math.max(30,Math.min(1100,P.tx)); P.ty=Math.max(30,Math.min(650,P.ty));}
+function attack(){
+let t=Mons.find(m=>!m.isNpc&&Math.abs(m.x-P.x)<80&&Math.abs(m.y-P.y)<80);
+if(!t)return; P.atk=10;
+let dmg=Math.floor(Math.random()*80)+30; t.hp-=dmg; burst(t.x,t.y,'#ff0',12); burst(t.x,t.y,'#f00',8); floats.push({x:t.x,y:t.y-20,txt:'-'+dmg,life:1,color:'#ff4444'});
+if(t.hp<=0){Mons=Mons.filter(m=>m!==t); let g=Math.floor(Math.random()*100)+40; P.loot+=g; P.exp+=15; if(P.exp>=100){P.exp=0; P.lv++; P.mhp+=20; P.hp=P.mhp; burst(P.x,P.y,'#ffd700',30); floats.push({x:P.x,y:P.y-30,txt:'LEVEL UP!',life:1,color:'#ffd700'}); addChat('Sistema','LEVEL UP Lv '+P.lv)} addChat('Loot','Matou '+t.name+'! +'+g+' gold'); setTimeout(()=>{Mons.push({x:Math.random()*700+50,y:Math.random()*400+50,name:'Rat',emoji:'🐀',hp:60,walk:0})},1500)}
+update();
+}
+function collect(){if(!P.loot){showMsg('Sem loot!');return}P.gold+=P.loot; burst(P.x,P.y,'#ffd700',15); P.loot=0; update()}
+function heal(){P.hp=P.mhp; P.mp=P.mmp; burst(P.x,P.y,'#0f0',15); update()}
+function toggleAuto(){P.auto=!P.auto; document.getElementById('autoB').textContent=P.auto?'🤖 AUTO: ON':'🤖 AUTO: OFF'; document.getElementById('autoB').className=P.auto?'on':''}
+function update(){document.getElementById('gold').textContent=(P.gold+P.loot).toLocaleString('pt-BR'); document.getElementById('lv').textContent=P.lv; document.getElementById('hpT').textContent=P.hp+'/'+P.mhp; document.getElementById('hpF').style.width=(P.hp/P.mhp*100)+'%'; document.getElementById('mpT').textContent=P.mp+'/'+P.mmp; document.getElementById('xpT').textContent=Math.floor(P.exp)+'%'; document.getElementById('xpF').style.width=P.exp+'%'}
+function addChat(w,t){let c=document.getElementById('chat'); c.innerHTML+='<div><b>'+w+':</b> '+t+'</div>'; c.scrollTop=c.scrollHeight}
+function showMsg(t){addChat('Sistema',t)}
+function sendChat(){let i=document.getElementById('chatIn'); let t=i.value.trim(); if(!t)return; addChat(P.name,t); i.value=''; if(t.toLowerCase()=='hi')addChat('Pizetta','Olá '+P.name+'!'); if(t.toLowerCase()=='heal'){heal(); addChat('Pizetta','Curado!')}}
+function pick(e,btn){P.emoji=e; document.querySelectorAll('.vocs button').forEach(b=>b.style.borderColor='#555'); btn.style.borderColor='#ffd700'}
+function start(){let n=document.getElementById('nick').value.trim(); if(n)P.name=n; document.getElementById('nickTop').textContent=P.name; document.getElementById('start').style.display='none'; update(); loop();}
+document.addEventListener('keydown',e=>{if(e.key=='w'||e.key=='ArrowUp')move(0,-1); if(e.key=='s'||e.key=='ArrowDown')move(0,1); if(e.key=='a'||e.key=='ArrowLeft')move(-1,0); if(e.key=='d'||e.key=='ArrowRight')move(1,0); if(e.key==' ')attack()});
+setInterval(()=>{if(!P.auto||document.getElementById('start').style.display!='none')return; let near=Mons.find(m=>!m.isNpc&&Math.abs(m.x-P.x)<80&&Math.abs(m.y-P.y)<80); if(near)attack(); else{let t=Mons.find(m=>!m.isNpc); if(!t)return; let dx=Math.sign(t.x-P.x),dy=Math.sign(t.y-P.y); if(Math.random()<0.5&&dx!=0)move(dx,0); else move(0,dy)} if(Math.random()<0.1)collect()},900);
 </script>
 </body>
 </html>
